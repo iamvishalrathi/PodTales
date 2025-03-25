@@ -19,7 +19,7 @@ const MobileNav = () => {
   const { user } = useUser();
 
   return (
-    <section>
+    <section className="sticky top-0 z-50 bg-black-3">
       <Sheet>
         <SheetTrigger>
           <Image src="/icons/hamburger.svg" width={30} height={30} alt="menu" className="cursor-pointer" />
