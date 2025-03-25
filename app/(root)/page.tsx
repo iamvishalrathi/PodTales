@@ -5,6 +5,7 @@ import FeaturedPodcasts from "@/components/Home/FeaturedPodcasts";
 import PodcastSection from "@/components/Home/PodcastSection";
 import LatestPodcasts from "@/components/Home/LatestPodcasts";
 import { TrendingUp, Star } from "lucide-react";
+import MobileHomeHeader from "@/components/Home/MobileHomeHeader";
 
 const Home = () => {
   const latestPodcasts = useQuery(api.podcasts.getFilteredPodcasts, { type: 'latest', limit: 3 });
@@ -13,7 +14,12 @@ const Home = () => {
   const topRatedPodcasts = useQuery(api.podcasts.getFilteredPodcasts, { type: 'topRated', limit: 3 });
 
   return (
-    <div className="mt-5 flex flex-col md:overflow-hidden">
+    <div className="mt-5 flex flex-col">
+      {/* Mobile Header - Only visible on mobile */}
+      <div className="md:hidden mb-6">
+        <MobileHomeHeader />
+      </div>
+
       {/* Featured Podcasts */}
       <FeaturedPodcasts featuredPodcasts={featuredPodcasts} />
 
