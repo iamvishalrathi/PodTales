@@ -5,7 +5,7 @@ import FeaturedPodcasts from "@/components/Home/FeaturedPodcasts";
 import PodcastSection from "@/components/Home/PodcastSection";
 import LatestPodcasts from "@/components/Home/LatestPodcasts";
 import { TrendingUp, Star } from "lucide-react";
-import MobileHomeHeader from "@/components/Home/MobileHomeHeader";
+import MobileHomeHeader from "@/components/Home/Mobile/MobileHomeHeader";
 import { useRef } from "react";
 
 const Home = () => {
