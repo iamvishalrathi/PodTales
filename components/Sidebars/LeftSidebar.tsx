@@ -8,6 +8,8 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button";
 import { useAudio } from "@/providers/AudioProvider";
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 const LeftSidebar = () => {
     const { user } = useUser();
@@ -15,6 +17,15 @@ const LeftSidebar = () => {
     const router = useRouter();
     const { signOut } = useClerk();
     const { audio } = useAudio();
+    
+    // Fetch notifications to check for unread ones
+    const notifications = useQuery(
+        api.notifications.getUserNotifications,
+        user?.id ? { userId: user.id } : "skip"
+    );
+    
+    // Check if there are any unread notifications
+    const hasUnreadNotifications = notifications?.some(notification => !notification.isRead) || false;
 
     return (
         <section className={cn("left_sidebar h-[calc(100vh-5px)] transition-all duration-300", {
@@ -44,6 +55,9 @@ const LeftSidebar = () => {
                         const isActive = isProfileRoute
                             ? pathname === userProfilePath // Only active if it's exactly the user's profile
                             : pathname === route || pathname.startsWith(`${route}/`);
+                            
+                        // Check if this is the notification route
+                        const isNotificationRoute = route === "/notification";
 
                         return (
                             <Link
@@ -56,13 +70,18 @@ const LeftSidebar = () => {
                                         : 'text-white-2 hover:text-white-1'
                                 )}
                             >
-                                <Icon
-                                    size={24}
-                                    className={cn(
-                                        "transition-transform",
-                                        isActive ? "scale-110 text-orange-1" : "text-white-2"
+                                <div className="relative">
+                                    <Icon
+                                        size={24}
+                                        className={cn(
+                                            "transition-transform",
+                                            isActive ? "scale-110 text-orange-1" : "text-white-2"
+                                        )}
+                                    />
+                                    {isNotificationRoute && hasUnreadNotifications && (
+                                        <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-orange-1"></span>
                                     )}
-                                />
+                                </div>
                                 <p>{label}</p>
                             </Link>
                         );
