@@ -1,5 +1,4 @@
 import React from "react";
-import { TrendingUp, User, UserCheck } from "lucide-react";
 
 // Define all possible tab types in the application
 export type TabType = "all" | "unread" | "followers" | "following" | "topPodcasters";

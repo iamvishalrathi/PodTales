@@ -256,7 +256,7 @@ const CreatePodcast = () => {
     };
 
     return (
-        <section className="container max-w-4xl mx-auto px-4 py-10">
+        <section className="md:px-10 pt-10">
             <div className="space-y-10">
                 {/* Header */}
                 <div className="space-y-2">

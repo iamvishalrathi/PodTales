@@ -30,7 +30,6 @@ export default function RootLayout({
             <div className="flex flex-col">
               <Toaster />
               {children}
-              {/* Footer credit */}
               <div className="flex items-center justify-center mt-8 mb-8 text-white-3 text-sm">
                 <p className="flex items-center gap-1">
                   Made with <Heart size={16} className="text-orange-1 fill-orange-1" /> by{" "}
