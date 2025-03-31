@@ -10,7 +10,7 @@ interface LatestPodcastsProps {
 
 const LatestPodcasts = ({ latestPodcasts }: LatestPodcastsProps) => {
     return (
-        <section className="flex flex-col gap-5 mt-12 max-md:mb-10">
+        <section className="flex flex-col gap-5 mt-12">
             <header className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="bg-orange-1/10 p-3 rounded-xl">
