@@ -40,7 +40,7 @@ const CategoryFilter = ({
                     )}
                     <button
                         onClick={() => setShowCategoryFilter(false)}
-                        className="max-sm:hidden text-sm bg-black/20 hover:bg-white-1/10 px-3 py-1.5 rounded-lg text-white-2 transition-colors"
+                        className="text-sm bg-black/20 hover:bg-white-1/10 px-3 py-1.5 rounded-lg text-white-2 transition-colors"
                     >
                         Close
                     </button>

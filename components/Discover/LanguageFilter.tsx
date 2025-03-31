@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, X } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { languageOptions } from '@/constants/PodcastFields';
 
 interface LanguageFilterProps {
@@ -40,15 +40,18 @@ const LanguageFilter = ({
             <div className="flex justify-between items-center mb-5">
                 <h3 className="text-white-1 font-semibold flex items-center gap-2 text-lg">
                     <Globe size={18} className="text-orange-1" />
-                    Filter by Language
+                    <>
+                        <span className="sm:hidden">Language</span>
+                        <span className="hidden sm:inline">Filter by Language</span>
+                    </>
                 </h3>
                 <div className="flex gap-3">
                     {selectedLanguages.length > 0 && (
                         <button
                             onClick={clearLanguages}
-                            className="text-sm text-white-2 hover:text-orange-1 flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-lg hover:bg-black/20"
+                            className="text-sm bg-black/20 hover:bg-white-1/10 px-3 py-1.5 rounded-lg text-white-2 transition-colors"
                         >
-                            Clear all <X size={14} />
+                            Clear all
                         </button>
                     )}
                     <button

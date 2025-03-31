@@ -103,20 +103,20 @@ const FilterControls = ({
             {/* Filter controls section */}
             <div className="mt-4 flex flex-col sm:flex-row gap-3">
                 {/* Category and Language filter buttons */}
-                <div className="flex flex-wrap gap-2 sm:flex-1">
+                <div className="flex justify-between sm:justify-start gap-1 sm:gap-2 sm:flex-1">
                     <button
                         onClick={() => {
                             setShowCategoryFilter(!showCategoryFilter)
                             if (showLanguageFilter) setShowLanguageFilter(false)
                         }}
-                        className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-all duration-200 ${showCategoryFilter || selectedCategories.length > 0
+                        className={`px-2 sm:px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1 sm:gap-1.5 transition-all duration-200 ${showCategoryFilter || selectedCategories.length > 0
                             ? 'bg-orange-1 text-black shadow-md'
                             : 'bg-black/20 text-white-2 hover:bg-white-1/10'
                             }`}
                     >
                         <Filter size={16} />
-                        Categories {selectedCategories.length > 0 && (
-                            <span className="bg-black/30 text-white px-2 py-0.5 rounded-full text-xs ml-1">
+                        <span className="sm:inline">Categories</span> {selectedCategories.length > 0 && (
+                            <span className="bg-black/30 text-white px-2 py-0.5 rounded-full text-xs">
                                 {selectedCategories.length}
                             </span>
                         )}
@@ -127,14 +127,14 @@ const FilterControls = ({
                             setShowLanguageFilter(!showLanguageFilter)
                             if (showCategoryFilter) setShowCategoryFilter(false)
                         }}
-                        className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-all duration-200 ${showLanguageFilter || selectedLanguages.length > 0
+                        className={`px-2 sm:px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-1 sm:gap-1.5 transition-all duration-200 ${showLanguageFilter || selectedLanguages.length > 0
                             ? 'bg-orange-1 text-black shadow-md'
                             : 'bg-black/20 text-white-2 hover:bg-white-1/10'
                             }`}
                     >
                         <Languages size={16} />
-                        Languages {selectedLanguages.length > 0 && (
-                            <span className="bg-black/30 text-white px-2 py-0.5 rounded-full text-xs ml-1">
+                        <span className="sm:inline">Languages</span> {selectedLanguages.length > 0 && (
+                            <span className="bg-black/30 text-white px-2 py-0.5 rounded-full text-xs">
                                 {selectedLanguages.length}
                             </span>
                         )}
