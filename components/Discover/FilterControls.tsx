@@ -32,12 +32,51 @@ const FilterControls = ({
         <div className="bg-gradient-to-br from-white-1/10 to-white-1/5 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-white-1/10 shadow-lg">
             {/* Header section with title and view toggle */}
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                <h2 className="text-xl sm:text-2xl font-bold text-white-1 flex flex-wrap items-center">
-                    {!search ? 'Browse Community Podcasts' : 'Search results for '}
-                    {search && <span className="text-orange-1 ml-1 bg-orange-1/10 px-3 py-1 rounded-lg mt-1 sm:mt-0">{search}</span>}
-                </h2>
-                <div className="flex items-center gap-3">
-                    {/* View toggle with improved styling */}
+                <div className="flex justify-between items-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-white-1 flex flex-wrap items-center">
+                        {!search ? (
+                            <>
+                                <span className="sm:hidden">Browse</span>
+                                <span className="hidden sm:inline">Browse Community Podcasts</span>
+                            </>
+                        ) : (
+                            <>
+                                <span className="sm:hidden">Results</span>
+                                <span className="hidden sm:inline">Search results for</span>
+                            </>
+                        )}
+                        {search && (
+                            <span className="text-orange-1 ml-1 bg-orange-1/10 px-3 py-1 rounded-lg mt-1 sm:mt-0 max-w-[120px] sm:max-w-[250px] truncate">
+                                {search}
+                            </span>
+                        )}
+                    </h2>
+                    <div className="flex items-center sm:hidden ml-3">
+                        {/* View toggle for mobile - right aligned */}
+                        <div className="bg-black/20 p-1 rounded-lg flex shadow-inner backdrop-blur-sm">
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`p-1.5 rounded-md transition-all duration-200 ${viewMode === 'grid'
+                                    ? 'bg-orange-1 text-black shadow-md scale-105'
+                                    : 'text-white-2 hover:bg-white-1/10'}`}
+                                aria-label="Grid view"
+                            >
+                                <LayoutGrid size={18} />
+                            </button>
+                            <button
+                                onClick={() => setViewMode('list')}
+                                className={`p-1.5 rounded-md transition-all duration-200 ${viewMode === 'list'
+                                    ? 'bg-orange-1 text-black shadow-md scale-105'
+                                    : 'text-white-2 hover:bg-white-1/10'}`}
+                                aria-label="List view"
+                            >
+                                <List size={18} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="hidden sm:flex items-center gap-3">
+                    {/* View toggle for desktop */}
                     <div className="bg-black/20 p-1 rounded-lg flex shadow-inner backdrop-blur-sm">
                         <button
                             onClick={() => setViewMode('grid')}

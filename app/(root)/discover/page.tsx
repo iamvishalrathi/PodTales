@@ -101,7 +101,7 @@ const Discover = ({ searchParams }: { searchParams: { search: string, filter?: s
     }
 
     return (
-        <div className="flex flex-col gap-9 pb-12 pt-6">
+        <div className="flex flex-col gap-9 pt-6">
             {/* Header section */}
             <DiscoverHeader />
 
@@ -172,10 +172,6 @@ const Discover = ({ searchParams }: { searchParams: { search: string, filter?: s
                                 canShowLess={visiblePodcasts > initialPodcastCount}
                                 totalPodcasts={filteredPodcasts.length}
                                 visibleCount={Math.min(visiblePodcasts, filteredPodcasts.length)}
-                                selectedFilters={{
-                                    categories: selectedCategories,
-                                    languages: selectedLanguages
-                                }}
                             />
                         ) : (
                             <EmptyState

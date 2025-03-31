@@ -29,7 +29,6 @@ const PodcastDisplay = ({
   canShowLess,
   totalPodcasts,
   visibleCount,
-  selectedFilters
 }: PodcastDisplayProps) => {
   return (
     <>
@@ -80,7 +79,6 @@ const PodcastDisplay = ({
         <PodcastCountDisplay
           visibleCount={visibleCount}
           totalCount={totalPodcasts}
-          selectedFilters={selectedFilters}
         />
       )}
     </>
