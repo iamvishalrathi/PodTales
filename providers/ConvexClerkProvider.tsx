@@ -8,6 +8,7 @@ import { ReactNode } from "react";
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL as string);
 
 const ConvexClerkProvider = ({ children }: { children: ReactNode }) => (
+    //appearance are used to change the look of the clerk sign/signup page
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY as
         string} appearance={{
             layout: {
