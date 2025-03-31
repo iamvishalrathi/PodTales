@@ -21,24 +21,34 @@ export function ToggleButtonGroup({
 }: ToggleButtonGroupProps) {
   return (
     <div className={cn(
-      "generate_thumbnail flex flex-col sm:flex-row gap-3 sm:gap-4 w-full mx-auto",
+      "generate_thumbnail flex justify-between w-full mx-auto",
       containerWidth
     )}>
-      <ToggleButton
-        isActive={button1Active}
-        onClick={() => setButtonActive(true)}
-        activeColor="orange"
-      >
-        {button1text}
-      </ToggleButton>
-
-      <ToggleButton
-        isActive={button2Active}
-        onClick={() => setButtonActive(false)}
-        activeColor="blue"
-      >
-        {button2text}
-      </ToggleButton>
+      <div className="w-[49%]">
+        <ToggleButton
+          isActive={button1Active}
+          onClick={() => setButtonActive(true)}
+          activeColor="orange"
+        >
+          <>
+            <span className="sm:hidden">Use AI</span>
+            <span className="hidden sm:flex">{button1text}</span>
+          </>
+        </ToggleButton>
+      </div>
+      
+      <div className="w-[49%]">
+        <ToggleButton
+          isActive={button2Active}
+          onClick={() => setButtonActive(false)}
+          activeColor="blue"
+        >
+          <>
+            <span className="sm:hidden">Upload Custom</span>
+            <span className="hidden sm:flex">{button2text}</span>
+          </>
+        </ToggleButton>
+      </div>
     </div>
   );
-} 
+}

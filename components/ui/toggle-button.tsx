@@ -33,15 +33,15 @@ export function ToggleButton({
       variant={isActive ? "default" : "outline"}
       onClick={onClick}
       className={cn(
-        'w-full sm:w-auto text-sm sm:text-base font-medium',
+        'w-full text-xs sm:text-base font-medium',
         'transition-all duration-300 hover:scale-[1.02]',
-        'rounded-xl h-12 px-6',
+        'rounded-xl h-10 sm:h-12 px-2 sm:px-6',
         isActive ? colorStyles[activeColor].active : colorStyles[activeColor].inactive
       )}
     >
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-1 sm:gap-2">
         <div className={cn(
-          "size-2 rounded-full",
+          "hidden sm:block size-1.5 sm:size-2 rounded-full", // Added hidden sm:block to hide on mobile
           isActive ? "bg-white" : colorStyles[activeColor].dot,
           "transition-all duration-300",
           isActive && "animate-pulse"
@@ -50,4 +50,4 @@ export function ToggleButton({
       </div>
     </Button>
   );
-} 
+}
