@@ -4,7 +4,7 @@ import { api } from "@/convex/_generated/api";
 import FeaturedPodcasts from "@/components/Home/FeaturedPodcasts";
 import PodcastSection from "@/components/Home/PodcastSection";
 import LatestPodcasts from "@/components/Home/LatestPodcasts";
-import { TrendingUp, Star, Heart } from "lucide-react";
+import { TrendingUp, Star } from "lucide-react";
 import MobileHomeHeader from "@/components/Home/Mobile/MobileHomeHeader";
 import { useRef } from "react";
 
@@ -83,13 +83,6 @@ const Home = () => {
       {/* Latest */}
       <div ref={latestRef} id="latest">
         <LatestPodcasts latestPodcasts={latestPodcasts} />
-      </div>
-      
-      {/* Footer credit */}
-      <div className="flex items-center justify-center mt-8 mb-8 text-white-3 text-sm">
-        <p className="flex items-center gap-1">
-          Made with <Heart size={16} className="text-orange-1 fill-orange-1" /> by Vishal Kumar
-        </p>
       </div>
     </div>
   );
