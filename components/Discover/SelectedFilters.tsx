@@ -30,7 +30,7 @@ const SelectedFilters = ({
   return (
     <>
       {showFilters && (
-        <div className="flex flex-wrap gap-2.5 items-center bg-white-1/5 p-4 rounded-xl border border-white-1/10">
+        <div className="hidden sm:flex flex-wrap gap-2.5 items-center bg-white-1/5 p-4 rounded-xl border border-white-1/10">
           {/* Categories section */}
           {selectedCategories.length > 0 && (
             <>

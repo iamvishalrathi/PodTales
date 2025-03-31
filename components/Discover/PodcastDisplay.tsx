@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import GridPodcastCard from '@/components/PodcastCard/GridPodcastCard';
 import ListPodcastCard from '@/components/PodcastCard/ListPodcastCard';
 import ShowMoreLessButtons from '@/components/ShowMoreLessButtons';
@@ -30,9 +30,35 @@ const PodcastDisplay = ({
   totalPodcasts,
   visibleCount,
 }: PodcastDisplayProps) => {
+  // Create a ref for the podcast section
+  const podcastSectionRef = useRef<HTMLDivElement>(null);
+
+  // Custom show less handler that scrolls to the top of the podcast section
+  const handleShowLess = () => {
+    if (showLessPodcasts) {
+      showLessPodcasts();
+      
+      // Scroll to the top of the podcast section with a slight delay to ensure state updates
+      setTimeout(() => {
+        if (podcastSectionRef.current) {
+          const yOffset = -100; // Add some offset to account for headers/navigation
+          const y = podcastSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          
+          window.scrollTo({
+            top: y,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+  };
+
   return (
     <>
-      <div className={viewMode === 'grid' ? "podcast_grid" : "flex flex-col gap-4"}>
+      <div 
+        ref={podcastSectionRef} 
+        className={viewMode === 'grid' ? "podcast_grid" : "flex flex-col gap-4"}
+      >
         {filteredPodcasts.map((podcast, index) => (
           <div key={podcast._id}>
             {viewMode === 'grid' ? (
@@ -69,7 +95,7 @@ const PodcastDisplay = ({
       {/* Show More/Less buttons */}
       <ShowMoreLessButtons
         loadMoreHandler={loadMorePodcasts}
-        showLessHandler={showLessPodcasts}
+        showLessHandler={handleShowLess}
         hasMore={hasMorePodcasts}
         canShowLess={canShowLess}
       />
