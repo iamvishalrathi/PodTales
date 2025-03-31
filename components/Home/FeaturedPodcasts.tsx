@@ -56,7 +56,7 @@ const FeaturedPodcasts = ({ featuredPodcasts }: FeaturedPodcastsProps) => {
     }, [emblaApi, isPaused]);
 
     if (!featuredPodcasts || featuredPodcasts.length === 0) {
-        return <FeaturedSkeleton />;
+        return <div className="hidden md:block"><FeaturedSkeleton /></div>;
     }
 
     return (

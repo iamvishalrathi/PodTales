@@ -15,7 +15,6 @@ const Home = () => {
   const topRatedPodcasts = useQuery(api.podcasts.getFilteredPodcasts, { type: 'topRated', limit: 3 });
 
   // Create refs for each section
-  const featuredRef = useRef<HTMLDivElement>(null);
   const trendingRef = useRef<HTMLDivElement>(null);
   const topRatedRef = useRef<HTMLDivElement>(null);
   const latestRef = useRef<HTMLDivElement>(null);
@@ -24,9 +23,6 @@ const Home = () => {
   const scrollToSection = (sectionId: string) => {
     let ref;
     switch (sectionId) {
-      case 'featured':
-        ref = featuredRef;
-        break;
       case 'trending':
         ref = trendingRef;
         break;
@@ -60,7 +56,7 @@ const Home = () => {
       </div>
 
       {/* Featured Podcasts */}
-      <div ref={featuredRef} id="featured">
+      <div id="featured">
         <FeaturedPodcasts featuredPodcasts={featuredPodcasts} />
       </div>
 
