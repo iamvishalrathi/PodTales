@@ -221,4 +221,4 @@ html {
 }
 
 /* Import Clerk styles */
-@import "./styles/clerk.css";
+@import "./style/clerk.css";
