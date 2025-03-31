@@ -12,6 +12,9 @@ interface PodcastSectionProps {
 }
 
 const PodcastSection = ({ title, icon, podcasts, filterType }: PodcastSectionProps) => {
+    // Split the title to separate "Podcasts" from the rest
+    const titleParts = title.split(' Podcasts');
+    
     return (
         <section className="flex flex-col gap-5 mt-12">
             <header className="flex items-center justify-between">
@@ -19,7 +22,10 @@ const PodcastSection = ({ title, icon, podcasts, filterType }: PodcastSectionPro
                     <div className="bg-orange-1/10 p-3 rounded-xl">
                         {icon}
                     </div>
-                    <h1 className="text-2xl font-bold text-white-1">{title}</h1>
+                    <h1 className="text-2xl font-bold text-white-1">
+                        {titleParts[0]}
+                        <span className="hidden md:inline"> Podcasts</span>
+                    </h1>
                 </div>
                 <Link
                     href={`/discover?filter=${filterType}`}
