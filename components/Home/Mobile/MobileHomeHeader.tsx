@@ -1,7 +1,9 @@
 import React from 'react';
 import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import { Bell, Search } from 'lucide-react';
+import { Bell } from 'lucide-react';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 interface MobileHomeHeaderProps {
     scrollToSection?: (sectionId: string) => void;
@@ -9,6 +11,15 @@ interface MobileHomeHeaderProps {
 
 const MobileHomeHeader = ({ scrollToSection }: MobileHomeHeaderProps) => {
     const { user } = useUser();
+    
+    // Fetch notifications to check for unread ones
+    const notifications = useQuery(
+        api.notifications.getUserNotifications,
+        user?.id ? { userId: user.id } : "skip"
+    );
+    
+    // Check if there are any unread notifications
+    const hasUnreadNotifications = notifications?.some(notification => !notification.isRead) || false;
 
     const handleCategoryClick = (sectionId: string, e: React.MouseEvent) => {
         e.preventDefault();
@@ -31,8 +42,10 @@ const MobileHomeHeader = ({ scrollToSection }: MobileHomeHeaderProps) => {
                 {/* Notification icon */}
                 <Link href="/notification" className="relative p-2">
                     <Bell size={24} className="text-white-2" />
-                    {/* Notification dot - you can conditionally render this based on unread notifications */}
-                    <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-orange-1"></span>
+                    {/* Notification dot - only show when there are unread notifications */}
+                    {hasUnreadNotifications && (
+                        <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-orange-1"></span>
+                    )}
                 </Link>
             </div>
 
