@@ -566,37 +566,40 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
 
       {/* Audio Preview */}
       {props.audio ? (
-        <div className="flex flex-col gap-3 mt-8">
+        <div className="flex flex-col gap-2 sm:gap-3 mt-4 sm:mt-8">
           <div className="flex items-center justify-between">
-            <Label className="text-16 sm:text-18 font-bold text-white-1 flex items-center gap-3">
-              <div className="h-6 w-1.5 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
+            <Label className="text-15 sm:text-18 font-bold text-white-1 flex items-center gap-2 sm:gap-3">
+              <div className="h-5 sm:h-6 w-1.5 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
               Audio Preview
             </Label>
             <Button
               onClick={(e) => handleDelete(e)}
-              variant="destructive"
+              variant="ghost"
               size="sm"
               className={cn(
-                "gap-2 self-end",
+                "gap-1.5 sm:gap-2 self-end",
                 "hover:scale-105 transition-all duration-300",
-                "bg-red-500/90 hover:bg-red-500 rounded-full px-4",
-                "shadow-lg hover:shadow-red-500/20"
+                "text-red-500 hover:text-red-400 rounded-full px-2 sm:px-4 py-1 sm:py-2",
+                "hover:bg-red-500/10 sm:hover:bg-red-500/10",
+                "text-xs sm:text-sm"
               )}
             >
-              <Trash2 size={16} className="text-white" />
-              <span className="text-white">Delete Audio</span>
+              <Trash2 size={14} className="sm:size-4" />
+              <span className="max-md:hidden">Delete Audio</span>
             </Button>
           </div>
+          
+          {/* Rest of the audio preview component remains unchanged */}
           {isMounted && (
-            <div className="flex flex-col gap-4 bg-black-1/80 p-6 rounded-xl backdrop-blur-sm 
+            <div className="flex flex-col gap-3 sm:gap-4 bg-black-1/80 p-3 sm:p-6 rounded-xl backdrop-blur-sm 
             border border-white/10 shadow-lg">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <Button
                   onClick={(e) => togglePlayPause(e)}
                   size="icon"
                   variant="ghost"
                   className={cn(
-                    "h-14 w-14 rounded-full",
+                    "h-10 w-10 sm:h-14 sm:w-14 rounded-full",
                     "bg-gradient-to-r from-orange-1 to-orange-400",
                     "hover:scale-110 transition-all duration-300",
                     "shadow-lg hover:shadow-orange-1/20",
@@ -604,12 +607,12 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
                   )}
                 >
                   {isPlaying ?
-                    <Square size={24} className="text-white" /> :
-                    <Play size={24} className="ml-1 text-white" />
+                    <Square size={18} className="text-white sm:size-6" /> :
+                    <Play size={18} className="ml-0.5 sm:ml-1 text-white sm:size-6" />
                   }
                 </Button>
-                <div className="flex-1 space-y-2">
-                  <div className="relative h-2 bg-black-1/50 rounded-full overflow-hidden">
+                <div className="flex-1 space-y-1 sm:space-y-2">
+                  <div className="relative h-1.5 sm:h-2 bg-black-1/50 rounded-full overflow-hidden">
                     <div className="absolute inset-0 bg-black-1/50" />
 
                     <div
@@ -623,7 +626,7 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
                   </div>
 
                   {isMounted && (
-                    <div className="flex justify-between text-sm text-gray-1">
+                    <div className="flex justify-between text-xs sm:text-sm text-gray-1">
                       <span>{formatTime(currentTime)}</span>
                       <span>{formatTime(duration)}</span>
                     </div>

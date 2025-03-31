@@ -244,21 +244,24 @@ const GenerateThumbnail = ({
       {isAiThumbnail ? (
         <div className="flex flex-col gap-5 animate-in fade-in-50">
           {thumbnailPrompts.length > 0 && (
-            <div className="mt-8 flex flex-col gap-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="h-6 w-1.5 flex-shrink-0 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
-                  <Label className="text-16 sm:text-18 font-bold text-white-1 leading-tight">
-                    Select a Thumbnail Prompt
+            <div className="mt-4 sm:mt-8 flex flex-col gap-3 sm:gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 flex-1">
+                  <div className="h-5 sm:h-6 w-1.5 flex-shrink-0 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
+                  <Label className="text-15 sm:text-18 font-bold text-white-1 leading-tight">
+                    <>
+                      <span className="sm:hidden">Select a Prompt</span>
+                      <span className="hidden sm:inline">Select a Thumbnail Prompt</span>
+                    </>
                   </Label>
                 </div>
-                <span className="text-sm font-medium text-gray-1 whitespace-nowrap px-3 py-1.5 
+                <span className="text-xs sm:text-sm font-medium text-gray-1 whitespace-nowrap px-2 sm:px-3 py-1 sm:py-1.5 
                   bg-black-1/40 rounded-full border border-white/5">
                   {thumbnailPrompts.length} suggestions
                 </span>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5 sm:gap-2">
                 {thumbnailPrompts.map((prompt, index) => (
                   <button
                     key={index}
@@ -269,27 +272,27 @@ const GenerateThumbnail = ({
                       setImagePrompt(prompt);
                     }}
                     className={cn(
-                      "group relative text-left px-6 py-4 rounded-xl transition-all duration-300",
+                      "group relative text-left px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300",
                       "hover:bg-black-1/70 border border-black-6",
                       "text-gray-1 hover:text-white-1",
                       "flex items-center justify-between",
                       "hover:shadow-lg hover:shadow-orange-1/5",
                       "hover:scale-[1.01] active:scale-[0.99]",
-                      "gap-3",
+                      "gap-2 sm:gap-3",
                       imagePrompt === prompt ? [
                         "bg-black-1/70 border-orange-1/50 text-white-1",
                         "shadow-lg shadow-orange-1/10"
                       ] : "hover:border-orange-1/30"
                     )}
                   >
-                    <div className="flex items-center gap-3 flex-1">
+                    <div className="flex items-center gap-2 sm:gap-3 flex-1">
                       {imagePrompt === prompt && (
                         <div className="h-full w-1 absolute left-0 top-0 bg-gradient-to-t from-orange-1 to-orange-400 rounded-l-xl" />
                       )}
-                      <span className="text-sm font-medium leading-relaxed">{prompt}</span>
+                      <span className="text-xs sm:text-sm font-medium leading-relaxed">{prompt}</span>
                     </div>
                     <div className={cn(
-                      "w-4 h-4 rounded-full border-2 flex-shrink-0 transition-all duration-300",
+                      "w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 flex-shrink-0 transition-all duration-300",
                       "flex items-center justify-center",
                       imagePrompt === prompt ? [
                         "border-orange-1 bg-orange-1",
@@ -300,7 +303,7 @@ const GenerateThumbnail = ({
                       ]
                     )}>
                       {imagePrompt === prompt && (
-                        <div className="w-2 h-2 bg-white rounded-full" />
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full" />
                       )}
                     </div>
                   </button>

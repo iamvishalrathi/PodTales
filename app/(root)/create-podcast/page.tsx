@@ -348,14 +348,14 @@ const CreatePodcast = () => {
 
                             {/* Additional Details */}
                             <SectionContainer title="Additional Details">
-                                <div className={`flex flex-col gap-6 pt-5`}>
+                                <div className={`flex flex-col gap-4 sm:gap-6 pt-3 sm:pt-5`}>
                                     <FormField
                                         control={form.control}
                                         name="podcastDescription"
                                         render={({ field }) => (
                                             <FormFieldWrapper label="Podcast Description">
                                                 <Textarea
-                                                    className="input-class min-h-[120px]"
+                                                    className="input-class min-h-[100px] sm:min-h-[120px] text-sm sm:text-base p-3 sm:p-4"
                                                     placeholder="Write or generate a compelling description for your podcast..."
                                                     suppressHydrationWarning
                                                     {...field}
