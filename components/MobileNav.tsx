@@ -53,14 +53,14 @@ const MobileNav = () => {
           </Link>
           <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
             <nav className="flex h-full flex-col gap-6 text-white-1">
-              {sidebarLinks.map(({ route, label, imgURL }) => {
+              {sidebarLinks.map(({ route, label, icon: Icon }) => {
                 const isActive = pathname === route || pathname.startsWith(`${route}/`);
 
                 return <SheetClose asChild key={route}>
                   <Link href={route === "/profile" ? (user ? `/profile/${user?.id}` : "/sign-in") : route} className={cn("flex gap-3 items-center py-4 max-lg:px-4 justify-start", {
                     'bg-nav-focus border-r-4 border-orange-1': isActive
                   })}>
-                    <Image src={imgURL} alt={label} width={24} height={24} />
+                    <Icon size={24} className={isActive ? "text-orange-1" : "text-white-2"} />
                     <p>{label}</p>
                   </Link>
                 </SheetClose>

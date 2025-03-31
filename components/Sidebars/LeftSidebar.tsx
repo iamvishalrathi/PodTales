@@ -35,7 +35,7 @@ const LeftSidebar = () => {
                 </Link>
 
                 <div className="flex flex-col space-y-1 w-full">
-                    {sidebarLinks.map(({ route, label, imgURL }) => {
+                    {sidebarLinks.map(({ route, label, icon: Icon }) => {
                         // For profile route, check if the current path is the user's profile
                         const isProfileRoute = route === "/profile";
                         const userProfilePath = user ? `/profile/${user.id}` : "/sign-in";
@@ -56,14 +56,11 @@ const LeftSidebar = () => {
                                         : 'text-white-2 hover:text-white-1'
                                 )}
                             >
-                                <Image
-                                    src={imgURL}
-                                    alt={label}
-                                    width={24}
-                                    height={24}
+                                <Icon
+                                    size={24}
                                     className={cn(
                                         "transition-transform",
-                                        isActive ? "scale-110" : ""
+                                        isActive ? "scale-110 text-orange-1" : "text-white-2"
                                     )}
                                 />
                                 <p>{label}</p>

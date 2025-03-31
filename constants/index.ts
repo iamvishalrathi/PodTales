@@ -1,31 +1,33 @@
+import { Home, Compass, Mic, Bell, Users, User } from "lucide-react";
+
 export const sidebarLinks = [
   {
-    imgURL: "/icons/home.svg",
+    icon: Home,
     route: "/",
     label: "Home",
   },
   {
-    imgURL: "/icons/discover.svg",
+    icon: Compass,
     route: "/discover",
     label: "Discover",
   },
   {
-    imgURL: "/icons/microphone.svg",
+    icon: Mic,
     route: "/create-podcast",
     label: "Create Podcast",
   },
   {
-    imgURL: "/icons/bell.svg",
+    icon: Bell,
     route: "/notification",
     label: "Notification",
   },
   {
-    imgURL: "/icons/community.svg",
+    icon: Users,
     route: "/community",
     label: "Community",
   },
   {
-    imgURL: "/icons/profile.svg",
+    icon: User,
     route: "/profile",
     label: "My Profile",
   },
