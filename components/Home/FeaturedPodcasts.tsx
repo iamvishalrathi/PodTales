@@ -60,7 +60,7 @@ const FeaturedPodcasts = ({ featuredPodcasts }: FeaturedPodcastsProps) => {
     }
 
     return (
-        <section className="relative w-full h-[300px]">
+        <section className="relative w-full h-[300px] hidden md:block">
             <div
                 className="overflow-hidden rounded-2xl"
                 ref={emblaRef}

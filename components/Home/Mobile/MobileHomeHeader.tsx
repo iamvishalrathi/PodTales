@@ -37,13 +37,7 @@ const MobileHomeHeader = ({ scrollToSection }: MobileHomeHeaderProps) => {
             </div>
 
             {/* Quick category chips */}
-            <div className="flex gap-2 overflow-x-auto scroll-x-hidden py-2">
-                <button 
-                    onClick={(e) => handleCategoryClick('featured', e)}
-                    className="flex-shrink-0 bg-black-1/50 px-4 py-2 rounded-full text-sm text-white-2 border border-gray-800"
-                >
-                    Featured
-                </button>
+            <div className="flex gap-2 overflow-x-auto scroll-x-hidden pt-2">
                 <button 
                     onClick={(e) => handleCategoryClick('trending', e)}
                     className="flex-shrink-0 bg-black-1/50 px-4 py-2 rounded-full text-sm text-white-2 border border-gray-800"

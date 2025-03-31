@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <div className="mt-5 flex flex-col">
       {/* Mobile Header - Only visible on mobile */}
-      <div className="md:hidden mb-6">
+      <div className="md:hidden">
         <MobileHomeHeader scrollToSection={scrollToSection} />
       </div>
 
