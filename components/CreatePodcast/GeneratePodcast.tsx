@@ -20,7 +20,6 @@ import { voiceCategories } from '@/constants/PodcastFields';
 
 const MAX_CHARACTERS = 2500;
 const CHARACTERS_PER_CREDIT = 150;
-const FADE_IN_ANIMATION = "animate-in fade-in duration-500";
 
 const useGeneratePodcast = ({
   setAudio, voiceType, voicePrompt, setAudioStorageId, audioStorageId, setVoiceType

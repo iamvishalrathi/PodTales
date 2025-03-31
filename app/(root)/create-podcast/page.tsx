@@ -391,7 +391,7 @@ const CreatePodcast = () => {
                                 title="Thumbnail Generation"
                                 rightElement={
                                     thumbnailPrompts.length > 0 && (
-                                        <span className="text-sm text-gray-1">
+                                        <span className="max-md:hidden text-sm text-gray-1">
                                             {thumbnailPrompts.length} AI suggestions available
                                         </span>
                                     )
