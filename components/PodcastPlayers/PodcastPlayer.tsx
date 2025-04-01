@@ -233,7 +233,7 @@ const PodcastPlayer = () => {
                 )}
                 title="Toggle Fullscreen"
               >
-                <Maximize2 className="h-4 w-4 sm:h-5 sm:w-5" stroke="white" />
+                <Maximize2 className="h-5 w-5" stroke="white" />
               </button>
             </div>
           </div>
