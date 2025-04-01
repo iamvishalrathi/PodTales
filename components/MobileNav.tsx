@@ -62,7 +62,7 @@ const MobileNav = () => {
               </h1>
             </div>
           </Link>
-          <div className="flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
+          <div className="flex h-[90vh] flex-col justify-between overflow-y-auto">
             <nav className="flex flex-col gap-2 text-white-1">
               {sidebarLinks.map(({ route, label, icon: Icon }) => {
                 // For profile route, check if the current path is the user's profile
