@@ -108,7 +108,7 @@ const LikeShareLoopControls = ({
     return (
         <div className={cn(
             "flex items-center", 
-            isFullscreen ? "gap-6" : "gap-2 sm:gap-4", // Reduced gap on mobile
+            isFullscreen ? "gap-4" : "gap-2 sm:gap-4", // Reduced gap on mobile
             className
         )}>
             {showLoopControl && toggleLoop && (
