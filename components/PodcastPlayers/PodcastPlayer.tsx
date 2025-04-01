@@ -166,7 +166,7 @@ const PodcastPlayer = () => {
           />
         </div>
 
-        <section className="glassmorphism-black flex h-20 w-full items-center px-4 md:px-8">
+        <section className="glassmorphism-black flex h-20 w-full items-center px-2 sm:px-4 md:px-8">
           <audio
             ref={audioRef}
             src={audio?.audioUrl}
@@ -182,7 +182,7 @@ const PodcastPlayer = () => {
             imageUrl={audio?.imageUrl || ""}
             podcastId={audio?.podcastId}
             variant="compact"
-            className="w-[45%]"
+            className="w-[40%] sm:w-[45%]"
           />
 
           <div className="flex flex-1 justify-between">
@@ -198,42 +198,49 @@ const PodcastPlayer = () => {
             </div>
 
             {/* Right Section - Audio Settings */}
-            <div className="flex items-center min-w-[200px] justify-end gap-4">
-              <LikeShareLoopControls
-                podcastId={audio?.podcastId}
-                title={audio?.title || ""}
-                author={audio?.author || ""}
-                variant="compact"
-                isLooping={isLooping}
-                toggleLoop={toggleLoop}
-              />
+            <div className="flex items-center justify-end gap-1 sm:gap-2 md:gap-4 min-w-[100px] sm:min-w-[200px]">
+              {/* Only show loop control on larger screens */}
+              <div className="hidden sm:block">
+                <LikeShareLoopControls
+                  podcastId={audio?.podcastId}
+                  title={audio?.title || ""}
+                  author={audio?.author || ""}
+                  variant="compact"
+                  isLooping={isLooping}
+                  toggleLoop={toggleLoop}
+                />
+              </div>
               
-              <AudioSettingsControl
-                isMuted={isMuted}
-                toggleMute={toggleMute}
-                volume={volume}
-                handleVolumeChange={handleVolumeChange}
-                playbackRate={playbackRate}
-                handlePlaybackRateChange={handlePlaybackRateChange}
-                variant="compact"
-              />
+              {/* Hide volume controls on smallest screens */}
+              <div className="hidden sm:block">
+                <AudioSettingsControl
+                  isMuted={isMuted}
+                  toggleMute={toggleMute}
+                  volume={volume}
+                  handleVolumeChange={handleVolumeChange}
+                  playbackRate={playbackRate}
+                  handlePlaybackRateChange={handlePlaybackRateChange}
+                  variant="compact"
+                />
+              </div>
 
+              {/* Always show fullscreen button */}
               <button
                 onClick={toggleFullscreen}
                 className={cn(
-                  "rounded-full p-2 hover:bg-gray-800",
+                  "rounded-full p-1 sm:p-2 hover:bg-gray-800",
                   isFullscreen ? "text-primary" : "text-gray-400 hover:text-white"
                 )}
                 title="Toggle Fullscreen"
               >
-                <Maximize2 className="h-5 w-5" stroke="white" />
+                <Maximize2 className="h-4 w-4 sm:h-5 sm:w-5" stroke="white" />
               </button>
             </div>
           </div>
         </section>
       </div>
 
-      {/* Fullscreen Player Modal */}
+      {/* Fullscreen Player Modal - remains unchanged */}
       <FullscreenPlayer
         isOpen={isFullscreen}
         onClose={toggleFullscreen}
