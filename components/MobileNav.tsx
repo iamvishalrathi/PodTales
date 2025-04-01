@@ -65,11 +65,19 @@ const MobileNav = () => {
           <div className="flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
             <nav className="flex flex-col gap-2 text-white-1">
               {sidebarLinks.map(({ route, label, icon: Icon }) => {
-                const isActive = pathname === route || pathname.startsWith(`${route}/`);
+                // For profile route, check if the current path is the user's profile
+                const isProfileRoute = route === "/profile";
+                const userProfilePath = user ? `/profile/${user?.id}` : "/sign-in";
+                
+                // Check if current path is active
+                const isActive = isProfileRoute
+                  ? pathname === userProfilePath // Only active if it's exactly the user's profile
+                  : pathname === route || pathname.startsWith(`${route}/`);
+                
                 const isNotificationRoute = route === "/notification";
 
                 return <SheetClose asChild key={route}>
-                  <Link href={route === "/profile" ? (user ? `/profile/${user?.id}` : "/sign-in") : route} className={cn(
+                  <Link href={isProfileRoute ? userProfilePath : route} className={cn(
                     "flex gap-3 items-center py-3 px-3 rounded-lg justify-start transition-all duration-200",
                     isActive 
                       ? "bg-nav-focus border-r-4 border-orange-1 text-orange-1" 

@@ -55,7 +55,7 @@ const FeaturedPodcast = ({ podcast, setAudio }: FeaturedPodcastProps) => {
                             {podcast.podcastDescription || 'No description available'}
                         </p>
 
-                        <div className="flex flex-wrap gap-4 text-sm text-white-2">
+                        <div className="hidden sm:flex flex-wrap gap-4 text-sm text-white-2">
                             <div className="flex items-center gap-1">
                                 <Headphones size={16} className="text-orange-1" />
                                 <span>{podcast.views?.toLocaleString() || 0} views</span>

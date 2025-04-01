@@ -59,7 +59,7 @@ const ProfileActionButtons = ({
             {hasPodcasts && (
                 <Button
                     onClick={playRandomPodcast}
-                    className="bg-black-1/50 hover:bg-black-1/70 text-white-1 flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-800"
+                    className="hidden sm:flex bg-black-1/50 hover:bg-black-1/70 text-white-1 items-center gap-2 px-5 py-2.5 rounded-full border border-gray-800"
                 >
                     <Play size={16} className="text-orange-1" />
                     <span>Play Random</span>
