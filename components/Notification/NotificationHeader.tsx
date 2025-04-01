@@ -32,7 +32,7 @@ const NotificationHeader = ({
             >
                 <Bell size={24} className="text-orange-1 sm:hidden" />
                 {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-orange-1"></span>
+                    <span className="sm:hidden absolute -top-1 -right-1 h-2 w-2 rounded-full bg-orange-1"></span>
                 )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white-1">
