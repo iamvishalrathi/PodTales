@@ -226,7 +226,7 @@ export default function ProfileEditModal({
       </DialogTrigger>
       <DialogContent
         ref={dialogRef}
-        className="bg-black-1 border-gray-800 text-white-1 max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto scrollbar-hide"
+        className="bg-black-1 border-gray-800 text-white-1 max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto scrollbar-hide w-[95vw] p-4 sm:p-6"
         onOpenAutoFocus={(e) => {
           e.preventDefault(); // Prevent the default auto-focus behavior
         }}
@@ -302,21 +302,21 @@ export default function ProfileEditModal({
                 disabled={socialLinks.length >= 5}
               >
                 <Plus size={14} />
-                Add
+                <span className="hidden sm:inline">Add</span>
               </Button>
             </div>
 
             {socialLinks.length === 0 ? (
               <p className="text-sm text-white-3 italic">No social links added yet.</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {socialLinks.map((link, index) => (
-                  <div key={index} className="space-y-1">
-                    <div className="flex gap-2">
+                  <div key={index} className="space-y-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <select
                         value={link.platform}
                         onChange={(e) => handleSocialLinkChange(index, "platform", e.target.value)}
-                        className="bg-black-2 border border-gray-800 rounded-md text-white-1 focus:ring-orange-1 focus:border-orange-1 text-sm h-10 w-1/3"
+                        className="bg-black-2 border border-gray-800 rounded-md text-white-1 focus:ring-orange-1 focus:border-orange-1 text-sm h-10 w-full sm:w-1/3"
                       >
                         {PLATFORM_OPTIONS.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -326,7 +326,7 @@ export default function ProfileEditModal({
                       </select>
 
                       {link.platform === "other" ? (
-                        <>
+                        <div className="flex w-full gap-2">
                           <Input
                             placeholder="Platform name *"
                             value={link.customPlatform || ""}
@@ -340,13 +340,13 @@ export default function ProfileEditModal({
                             variant="ghost"
                             size="icon"
                             onClick={() => handleRemoveSocialLink(index)}
-                            className="h-10 w-10 text-white-3 hover:text-red-500 hover:bg-white-1/10"
+                            className="h-10 w-10 text-white-3 hover:text-red-500 hover:bg-white-1/10 flex-shrink-0"
                           >
                             <Trash2 size={16} />
                           </Button>
-                        </>
+                        </div>
                       ) : (
-                        <>
+                        <div className="flex w-full gap-2">
                           <Input
                             placeholder={`Your ${PLATFORM_OPTIONS.find(p => p.value === link.platform)?.label} URL`}
                             value={link.url}
@@ -358,32 +358,28 @@ export default function ProfileEditModal({
                             variant="ghost"
                             size="icon"
                             onClick={() => handleRemoveSocialLink(index)}
-                            className="h-10 w-10 text-white-3 hover:text-red-500 hover:bg-white-1/10"
+                            className="h-10 w-10 text-white-3 hover:text-red-500 hover:bg-white-1/10 flex-shrink-0"
                           >
                             <Trash2 size={16} />
                           </Button>
-                        </>
+                        </div>
                       )}
                     </div>
 
                     {/* Add URL field on next line for "other" platform */}
                     {link.platform === "other" && (
-                      <div className="flex gap-2 mt-2">
-                        <div className="w-1/3"></div> {/* Spacer to align with fields above */}
-                        <div className="flex-1 flex gap-2">
-                          <Input
-                            placeholder={`Your ${link.customPlatform || "Other"} URL`}
-                            value={link.url}
-                            onChange={(e) => handleSocialLinkChange(index, "url", e.target.value)}
-                            className={`bg-black-2 border-gray-800 text-white-1 focus:ring-orange-1 focus:border-orange-1 w-full ${urlErrors[index] ? 'border-red-500' : ''}`}
-                          />
-                          <div className="w-12"></div> {/* Spacer for alignment with delete button */}
-                        </div>
+                      <div className="flex gap-2">
+                        <Input
+                          placeholder={`Your ${link.customPlatform || "Other"} URL`}
+                          value={link.url}
+                          onChange={(e) => handleSocialLinkChange(index, "url", e.target.value)}
+                          className={`bg-black-2 border-gray-800 text-white-1 focus:ring-orange-1 focus:border-orange-1 w-full ${urlErrors[index] ? 'border-red-500' : ''}`}
+                        />
                       </div>
                     )}
 
                     {urlErrors[index] && (
-                      <p className="text-xs text-red-500 mt-1 ml-[calc(33.333%+0.5rem)]">{urlErrors[index]}</p>
+                      <p className="text-xs text-red-500 mt-1">{urlErrors[index]}</p>
                     )}
                   </div>
                 ))}

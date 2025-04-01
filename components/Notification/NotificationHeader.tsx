@@ -26,7 +26,15 @@ const NotificationHeader = ({
 }: NotificationHeaderProps) => (
     <div className="flex items-center justify-between gap-2 mb-4 sm:mb-8">
         <div className="flex items-center gap-2">
-            <Bell size={24} className="text-orange-1 sm:hidden" />
+            <div 
+                className="relative cursor-pointer" 
+                onClick={() => setActiveTab("unread" as TabType)}
+            >
+                <Bell size={24} className="text-orange-1 sm:hidden" />
+                {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-orange-1"></span>
+                )}
+            </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white-1">
                 <span className="hidden sm:inline">Notifications</span>
             </h1>

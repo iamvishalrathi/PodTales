@@ -18,7 +18,7 @@ export default function RootLayout({
         <LeftSidebar />
 
         <section className="flex min-h-screen flex-1 flex-col px-4 sm:px-14">
-          <div className="mx-auto flex w-full max-w-5xl flex-col max-sm:px-4">
+          <div className="mx-auto flex w-full max-w-5xl flex-col max-sm:px-2">
             <div className="sticky top-0 z-50 flex h-12 items-center justify-between md:hidden bg-black-3/90 backdrop-blur-sm">
               <Link href="/" className="flex cursor-pointer items-center gap-2 group">
                 <Image
