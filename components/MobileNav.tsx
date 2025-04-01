@@ -46,15 +46,15 @@ const MobileNav = () => {
     <section className="sticky top-0 z-50 bg-black-3">
       <Sheet>
         <SheetTrigger>
-          <Image src="/icons/hamburger.svg" width={30} height={30} alt="menu" className="cursor-pointer" />
+          <Image src="/icons/hamburger.svg" width={28} height={28} alt="menu" className="cursor-pointer" />
         </SheetTrigger>
-        <SheetContent side="left" className="border-none bg-black-1">
-          <Link href="/" className="flex cursor-pointer items-center gap-2 pb-10 pl-4 group">
-            <Image src="/icons/logo.png" alt="logo" width={35} height={35} className="transition-transform duration-300 group-hover:scale-110" />
+        <SheetContent side="left" className="border-none bg-black-1 w-[85vw] max-w-[300px]">
+          <Link href="/" className="flex cursor-pointer items-center gap-2 pb-6 pl-2 group">
+            <Image src="/icons/logo.png" alt="logo" width={32} height={32} className="transition-transform duration-300 group-hover:scale-110" />
             <div className="overflow-hidden">
               <h1 
                 className={cn(
-                  "text-[28px] font-extrabold ml-2 bg-gradient-to-r from-orange-1 to-white-1 bg-clip-text text-transparent transition-all duration-500",
+                  "text-[24px] sm:text-[28px] font-extrabold ml-1 bg-gradient-to-r from-orange-1 to-white-1 bg-clip-text text-transparent transition-all duration-500",
                   showTitle ? "max-w-[200px] opacity-100" : "max-w-0 opacity-0"
                 )}
               >
@@ -62,35 +62,38 @@ const MobileNav = () => {
               </h1>
             </div>
           </Link>
-          <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
-            <nav className="flex h-full flex-col gap-6 text-white-1">
+          <div className="flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
+            <nav className="flex flex-col gap-2 text-white-1">
               {sidebarLinks.map(({ route, label, icon: Icon }) => {
                 const isActive = pathname === route || pathname.startsWith(`${route}/`);
                 const isNotificationRoute = route === "/notification";
 
                 return <SheetClose asChild key={route}>
-                  <Link href={route === "/profile" ? (user ? `/profile/${user?.id}` : "/sign-in") : route} className={cn("flex gap-3 items-center py-4 max-lg:px-4 justify-start", {
-                    'bg-nav-focus border-r-4 border-orange-1': isActive
-                  })}>
+                  <Link href={route === "/profile" ? (user ? `/profile/${user?.id}` : "/sign-in") : route} className={cn(
+                    "flex gap-3 items-center py-3 px-3 rounded-lg justify-start transition-all duration-200",
+                    isActive 
+                      ? "bg-nav-focus border-r-4 border-orange-1 text-orange-1" 
+                      : "hover:bg-black-2/40"
+                  )}>
                     <div className="relative">
-                      <Icon size={24} className={isActive ? "text-orange-1" : "text-white-2"} />
+                      <Icon size={22} className={isActive ? "text-orange-1" : "text-white-2"} />
                       {isNotificationRoute && hasUnreadNotifications && (
-                        <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-orange-1"></span>
+                        <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-orange-1"></span>
                       )}
                     </div>
-                    <p>{label}</p>
+                    <p className="text-[15px] sm:text-base">{label}</p>
                   </Link>
                 </SheetClose>
               })}
             </nav>
             
             {/* Authentication buttons */}
-            <div className="mt-auto px-4 pb-20">
+            <div className="mt-2 px-2 pb-8">
               <SignedOut>
                 <SheetClose asChild>
                   <Button
                     asChild
-                    className="text-16 w-full bg-orange-1 hover:bg-orange-1/90 font-extrabold rounded-lg py-5 transition-all duration-200 shadow-lg hover:shadow-orange-1/20"
+                    className="text-[15px] w-full bg-orange-1 hover:bg-orange-1/90 font-bold rounded-lg py-4 transition-all duration-200 shadow-lg hover:shadow-orange-1/20"
                   >
                     <Link href="/sign-in">Sign in</Link>
                   </Button>
@@ -99,7 +102,7 @@ const MobileNav = () => {
               <SignedIn>
                 <SheetClose asChild>
                   <Button
-                    className="text-16 w-full bg-orange-1 hover:bg-orange-1/90 font-extrabold rounded-lg py-5 transition-all duration-200 shadow-lg hover:shadow-orange-1/20"
+                    className="text-[15px] w-full bg-orange-1 hover:bg-orange-1/90 font-bold rounded-lg py-4 transition-all duration-200 shadow-lg hover:shadow-orange-1/20"
                     onClick={() => signOut(() => router.push('/'))}
                   >
                     Log Out
