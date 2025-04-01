@@ -61,18 +61,18 @@ const Community = () => {
             { 
               id: "topPodcasters", 
               label: "Top Podcasters", 
-              icon: <TrendingUp size={16} /> 
+              icon: <TrendingUp size={16} className="hidden sm:inline" /> 
             },
             { 
               id: "followers", 
               label: "Followers", 
-              icon: <User size={16} />, 
+              icon: <User size={16} className="hidden sm:inline" />, 
               count: followers?.length 
             },
             { 
               id: "following", 
               label: "Following", 
-              icon: <UserCheck size={16} />, 
+              icon: <UserCheck size={16} className="hidden sm:inline" />, 
               count: following?.length 
             }
           ]}
