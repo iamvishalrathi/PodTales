@@ -95,8 +95,8 @@ const MobileNav = () => {
               })}
             </nav>
             
-            {/* Authentication buttons */}
-            <div className="mt-2 px-2 pb-8">
+            {/* Authentication buttons - moved up with margin-top */}
+            <div className="mt-auto mb-8 px-2">
               <SignedOut>
                 <SheetClose asChild>
                   <Button
