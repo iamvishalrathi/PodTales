@@ -31,7 +31,7 @@ const PreviewControls = ({
     onClick={(e) => e.stopPropagation()}
   >
     <div
-      className="absolute top-4 right-4 flex items-center gap-3
+      className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center sm:gap-3
         [&>button]:translate-y-4 group-hover/image:[&>button]:translate-y-0
         [&>button]:opacity-0 group-hover/image:[&>button]:opacity-100"
       onClick={(e) => e.stopPropagation()}
@@ -62,7 +62,8 @@ const PreviewControls = ({
           onClick={button.onClick}
           label={button.label}
           isLoading={button.isLoading}
-          className="transition-all duration-500"
+          className="transition-all duration-300 ease-in-out scale-75 sm:scale-100 
+                    hover:scale-[0.65] sm:hover:scale-105 active:scale-[0.55] sm:active:scale-95"
         />
       ))}
     </div>
@@ -74,7 +75,7 @@ const TypeBadge = ({ isAiGenerated }: { isAiGenerated: boolean }) => (
   <div className="absolute top-4 left-4 opacity-0 group-hover/image:opacity-100 
     transition-all duration-500 translate-y-4 group-hover/image:translate-y-0">
     {isAiGenerated ? (
-      <div className="flex items-center gap-2 px-4 py-2
+      <div className="max-md:hidden flex items-center gap-2 px-4 py-2
         bg-gradient-to-r from-orange-1/80 to-orange-400/80 
         backdrop-blur-xl rounded-full border border-orange-1/50 
         shadow-[0_4px_20px_rgba(0,0,0,0.4)]
@@ -84,7 +85,7 @@ const TypeBadge = ({ isAiGenerated }: { isAiGenerated: boolean }) => (
         <span className="text-sm font-medium text-white">AI Generated</span>
       </div>
     ) : (
-      <div className="flex items-center gap-2 px-4 py-2
+      <div className="max-md:hidden flex items-center gap-2 px-4 py-2
         bg-gradient-to-r from-blue-400/80 to-blue-500/80
         backdrop-blur-xl rounded-full border border-blue-400/50
         shadow-[0_4px_20px_rgba(0,0,0,0.4)]
