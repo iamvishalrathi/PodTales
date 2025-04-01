@@ -25,11 +25,7 @@ const NotificationContent = ({ notification }: NotificationContentProps) => (
     </div>
 
     <p className="text-white-2 mb-2">
-      {notification.type === "new_podcast"
-        ? `uploaded a new podcast: ${notification.podcastTitle}`
-        : notification.type === "follow"
-          ? "started following you"
-          : "liked your podcast"}
+      {notification.podcastTitle}
     </p>
 
     {notification.type === "new_podcast" && notification.podcastImageUrl && (
