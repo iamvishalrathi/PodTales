@@ -2,7 +2,7 @@ import { Star, Clock } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PodcastSection from "@/components/Profile/PodcastSection";
 import EmptyState from "@/components/EmptyState";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PodcastProps } from "@/types";
 import ShowMoreLessButtons from "@/components/ShowMoreLessButtons";
 import PodcastCountDisplay from "@/components/PodcastCountDisplay";
@@ -24,6 +24,9 @@ const PodcastTabs = ({
     const [visiblePodcasts, setVisiblePodcasts] = useState(3); // Initially show 3 podcasts
     const initialPodcastCount = 3; // Define a constant for the initial count
     
+    // Create a ref for the podcast section
+    const podcastSectionRef = useRef<HTMLDivElement>(null);
+    
     // Reset visible podcasts when tab changes - moved outside of conditional
     useEffect(() => {
         setVisiblePodcasts(initialPodcastCount);
@@ -39,9 +42,22 @@ const PodcastTabs = ({
         setVisiblePodcasts(prev => prev + 3);
     };
 
-    // Show less podcasts
+    // Show less podcasts with scroll behavior
     const showLessPodcasts = () => {
         setVisiblePodcasts(initialPodcastCount);
+        
+        // Scroll to the top of the podcast section with a slight delay to ensure state updates
+        setTimeout(() => {
+            if (podcastSectionRef.current) {
+                const yOffset = -100; // Add some offset to account for headers/navigation
+                const y = podcastSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }
+        }, 100);
     };
 
     // Determine which podcasts to display based on active tab
@@ -72,31 +88,35 @@ const PodcastTabs = ({
     return (
         <div className="mb-10">
             <Tabs defaultValue="popular" onValueChange={handleTabChange}>
-                <div className="bg-black/20 p-1.5 rounded-lg shadow-inner backdrop-blur-sm inline-flex mb-6">
-                    <TabsList className="bg-transparent border-0 p-0">
-                        <TabsTrigger
-                            value="popular"
-                            className="px-4 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all duration-200 data-[state=active]:bg-orange-1 data-[state=active]:text-black data-[state=active]:shadow-md data-[state=inactive]:text-white-2 data-[state=inactive]:hover:bg-white-1/10"
-                        >
-                            <Star size={15} />
-                            Popular
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="recent"
-                            className="px-4 py-2 rounded-md text-sm font-medium flex items-center gap-1.5 transition-all duration-200 data-[state=active]:bg-orange-1 data-[state=active]:text-black data-[state=active]:shadow-md data-[state=inactive]:text-white-2 data-[state=inactive]:hover:bg-white-1/10"
-                        >
-                            <Clock size={15} />
-                            Recent
-                        </TabsTrigger>
-                    </TabsList>
+                <div className="flex justify-center mb-6">
+                    <div className="bg-black-1/40 p-1.5 rounded-full shadow-inner backdrop-blur-sm inline-flex">
+                        <TabsList className="bg-transparent border-0 p-0">
+                            <TabsTrigger
+                                value="popular"
+                                className="px-5 py-2 rounded-full text-sm font-medium flex items-center gap-1.5 transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-1 data-[state=active]:to-orange-600 data-[state=active]:text-black data-[state=active]:shadow-md data-[state=inactive]:text-white-2 data-[state=inactive]:hover:bg-white-1/10"
+                            >
+                                <Star size={15} />
+                                Popular
+                            </TabsTrigger>
+                            <TabsTrigger
+                                value="recent"
+                                className="px-5 py-2 rounded-full text-sm font-medium flex items-center gap-1.5 transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-1 data-[state=active]:to-orange-600 data-[state=active]:text-black data-[state=active]:shadow-md data-[state=inactive]:text-white-2 data-[state=inactive]:hover:bg-white-1/10"
+                            >
+                                <Clock size={15} />
+                                Recent
+                            </TabsTrigger>
+                        </TabsList>
+                    </div>
                 </div>
 
-                {/* Single PodcastSection that changes based on active tab */}
-                <PodcastSection
-                    title={title}
-                    icon={icon}
-                    podcasts={currentPodcasts}
-                />
+                {/* Add ref to this div for scrolling */}
+                <div ref={podcastSectionRef}>
+                    <PodcastSection
+                        title={title}
+                        icon={icon}
+                        podcasts={currentPodcasts}
+                    />
+                </div>
 
                 {/* Show More/Less buttons */}
                 {allPodcasts.length > initialPodcastCount && (
