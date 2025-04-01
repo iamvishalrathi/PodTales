@@ -16,6 +16,7 @@ interface LikeShareLoopControlsProps {
     isLooping?: boolean;
     toggleLoop?: () => void;
     showLoopControl?: boolean;
+    showShareControl?: boolean; // New prop for mobile view
 }
 
 const LikeShareLoopControls = ({
@@ -27,6 +28,7 @@ const LikeShareLoopControls = ({
     isLooping = false,
     toggleLoop,
     showLoopControl = true,
+    showShareControl = true, // Default to true
 }: LikeShareLoopControlsProps) => {
     const [isLiked, setIsLiked] = useState(false);
     const { user } = useUser();
@@ -104,12 +106,16 @@ const LikeShareLoopControls = ({
     };
 
     return (
-        <div className={cn("flex items-center", isFullscreen ? "gap-6" : "gap-4", className)}>
+        <div className={cn(
+            "flex items-center", 
+            isFullscreen ? "gap-6" : "gap-2 sm:gap-4", // Reduced gap on mobile
+            className
+        )}>
             {showLoopControl && toggleLoop && (
                 <button
                     onClick={toggleLoop}
                     className={cn(
-                        "rounded-full p-2 transition-colors",
+                        "rounded-full p-1.5 sm:p-2 transition-colors", // Adjusted padding for mobile
                         isFullscreen ? "hover:bg-gray-800/50" : "hover:bg-gray-800",
                         isLooping 
                             ? isFullscreen ? "text-orange-1" : "text-orange-500" 
@@ -117,14 +123,14 @@ const LikeShareLoopControls = ({
                     )}
                     title={`Toggle Loop ${isFullscreen ? "(L)" : ""}`}
                 >
-                    <Repeat className={isFullscreen ? "h-6 w-6" : "h-5 w-5"} />
+                    <Repeat className={isFullscreen ? "h-6 w-6" : "h-4 w-4 sm:h-5 sm:w-5"} />
                 </button>
             )}
             
             <button
                 onClick={handleLike}
                 className={cn(
-                    "rounded-full p-2 transition-colors",
+                    "rounded-full p-1.5 sm:p-2 transition-colors", // Adjusted padding for mobile
                     isFullscreen ? "hover:bg-gray-800/50" : "hover:bg-gray-800",
                     isLiked
                         ? isFullscreen ? "text-orange-1" : "text-orange-500"
@@ -135,24 +141,26 @@ const LikeShareLoopControls = ({
             >
                 <Heart
                     className={cn(
-                        isFullscreen ? "h-6 w-6" : "h-5 w-5",
+                        isFullscreen ? "h-6 w-6" : "h-4 w-4 sm:h-5 sm:w-5", // Smaller icon on mobile
                         isLiked && (isFullscreen ? "fill-orange-1" : "fill-orange-500")
                     )}
                 />
             </button>
 
-            <button
-                onClick={handleShare}
-                className={cn(
-                    "rounded-full p-2 transition-colors",
-                    isFullscreen
-                        ? "text-white-1 hover:bg-gray-800/50 hover:text-orange-1"
-                        : "text-[#ffffff] hover:bg-gray-800 hover:text-white"
-                )}
-                title="Share Podcast"
-            >
-                <Share2 className={isFullscreen ? "h-6 w-6" : "h-5 w-5"} />
-            </button>
+            {showShareControl && (
+                <button
+                    onClick={handleShare}
+                    className={cn(
+                        "rounded-full p-1.5 sm:p-2 transition-colors", // Adjusted padding for mobile
+                        isFullscreen
+                            ? "text-white-1 hover:bg-gray-800/50 hover:text-orange-1"
+                            : "text-[#ffffff] hover:bg-gray-800 hover:text-white"
+                    )}
+                    title="Share Podcast"
+                >
+                    <Share2 className={isFullscreen ? "h-6 w-6" : "h-4 w-4 sm:h-5 sm:w-5"} />
+                </button>
+            )}
         </div>
     );
 };
