@@ -35,15 +35,17 @@ const RatingSection = ({
             {podcast?.ratingCount && podcast.ratingCount > 0 && (
                 <>
                     <div className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full">
-                        <Star size={18} stroke="white" />
-                        <span className="text-14 font-medium text-white-2">{podcast.ratingCount} ratings</span>
+                        <Star size={18} stroke="white" fill="orange" />
+                        <span className="text-14 font-medium text-white-2">
+                            {podcast.averageRating?.toFixed(1)} ({podcast.ratingCount} ratings)
+                        </span>
                     </div>
                     <button
                         onClick={() => setShowRatingAnalysis(!showRatingAnalysis)}
                         className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full hover:bg-white-1/10 transition-colors"
                     >
                         <ChartBar size={18} stroke="white" />
-                        <span className="text-14 font-medium text-white-2">
+                        <span className="text-14 font-medium text-white-2 hidden sm:inline">
                             {showRatingAnalysis ? "Hide Analysis" : "Show Analysis"}
                         </span>
                     </button>

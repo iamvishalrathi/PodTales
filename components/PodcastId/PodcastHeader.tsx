@@ -9,7 +9,7 @@ interface PodcastHeaderProps {
 
 const PodcastHeader = ({ podcastType, audioDuration, views, averageRating }: PodcastHeaderProps) => {
   return (
-    <header className="mt-9 flex items-center justify-between bg-black-1/30 p-6 rounded-xl border border-gray-800">
+    <header className="hidden sm:flex mt-9 items-center justify-between bg-black-1/30 p-6 rounded-xl border border-gray-800">
       <div className="flex items-center gap-3">
         <div className="h-6 w-1.5 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
         <h1 className="text-24 font-bold text-white-1">

@@ -139,9 +139,9 @@ const PodcastDetail = ({
   if (!imageUrl || !authorImageUrl) return <LoaderSpinner />;
 
   return (
-    <div className="w-full bg-black-1/30 p-6 rounded-xl border border-gray-800">
-      <div className="flex w-full justify-between max-md:flex-col max-md:items-center gap-8">
-        <div className="flex flex-col gap-8 max-md:items-center md:flex-row">
+    <div className="w-full bg-black-1/30 p-4 sm:p-6 rounded-xl border border-gray-800">
+      <div className="flex w-full justify-between max-md:flex-col max-md:items-center gap-6 sm:gap-8">
+        <div className="flex flex-col gap-6 sm:gap-8 max-md:items-center md:flex-row">
           {/* Thumbnail */}
           <div className="relative group">
             <Image
@@ -149,15 +149,15 @@ const PodcastDetail = ({
               width={250}
               height={250}
               alt="Podcast image"
-              className="aspect-square rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
+              className="w-[200px] sm:w-[250px] aspect-square rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
           </div>
 
           {/* Content */}
-          <div className="flex w-full flex-col gap-5 max-md:items-center md:gap-6">
+          <div className="flex w-full flex-col gap-4 sm:gap-5 max-md:items-center md:gap-6">
             <article className="flex flex-col gap-3 max-md:items-center">
-              <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1 transition-colors duration-200 hover:text-orange-1">
+              <h1 className="text-2xl sm:text-32 font-extrabold tracking-[-0.32px] text-white-1 transition-colors duration-200 hover:text-orange-1 text-center md:text-left">
                 {podcastTitle}
               </h1>
               <figure
@@ -177,11 +177,11 @@ const PodcastDetail = ({
               </figure>
             </article>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 flex-wrap justify-center md:justify-start">
               <Button
                 variant="ghost"
                 size="icon"
-                className={`size-12 rounded-full transition-all duration-200 hover:scale-105 flex items-center justify-center ${isPlaying
+                className={`size-10 sm:size-12 rounded-full transition-all duration-200 hover:scale-105 flex items-center justify-center ${isPlaying
                     ? "bg-black text-orange-1 hover:bg-black/90"
                     : "bg-orange-1 text-white-1 hover:bg-orange-1/90"
                   }`}
@@ -190,18 +190,18 @@ const PodcastDetail = ({
                 {isPlaying ? (
                   <MusicBars />
                 ) : (
-                  <Play className="size-6" />
+                  <Play className="size-5 sm:size-6" />
                 )}
               </Button>
 
               <button
                 onClick={sharePodcast}
-                className="flex items-center gap-2 bg-black-1/50 hover:bg-black-1/70 transition-colors px-4 py-2 rounded-full cursor-pointer min-w-[100px] justify-center"
+                className="flex items-center gap-1 sm:gap-2 bg-black-1/50 hover:bg-black-1/70 transition-colors px-3 sm:px-4 py-2 rounded-full cursor-pointer min-w-[90px] sm:min-w-[100px] justify-center"
               >
                 {isCopied ? (
-                  <Check size={20} stroke="white" />
+                  <Check size={18} stroke="white" />
                 ) : (
-                  <Share2 size={20} stroke="white" />
+                  <Share2 size={18} stroke="white" />
                 )}
                 <span className="text-14 font-medium text-white-2 w-[45px] text-center">
                   {isCopied ? "Copied!" : "Share"}
@@ -210,13 +210,13 @@ const PodcastDetail = ({
 
               <Button
                 onClick={handleLike}
-                className={`flex items-center gap-2 px-3 min-w-[70px] ${isLiked
+                className={`flex items-center gap-1 sm:gap-2 px-3 min-w-[70px] ${isLiked
                     ? "bg-red-500 hover:bg-red-600"
                     : "bg-black-1/50 hover:bg-black-1/70"
                   } text-white-1 transition-colors`}
               >
                 <Heart
-                  size={20}
+                  size={18}
                   className={`transition-transform ${isLiked ? "fill-current" : ""}`}
                 />
                 <span className="w-[20px] text-center">
@@ -229,21 +229,11 @@ const PodcastDetail = ({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hover:bg-black-1/50"
-                    onClick={() => setIsDeleting((prev) => !prev)}
+                    className="hover:bg-black-1/50 size-10 sm:size-12 text-white-2 hover:text-red-500"
+                    onClick={handleDelete}
                   >
-                    <MoreVertical size={20} stroke="white" />
+                    <Trash2 size={18} stroke="currentColor" />
                   </Button>
-                  {isDeleting && (
-                    <div
-                      className="absolute left-0 top-full mt-2 z-10 flex w-32 cursor-pointer items-center justify-center gap-2 
-                      rounded-xl bg-black-6 py-2.5 transition-colors duration-200 hover:bg-red-500/20"
-                      onClick={handleDelete}
-                    >
-                      <Trash2 size={16} stroke="white" />
-                      <span className="text-16 font-medium text-white-1">Delete</span>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
