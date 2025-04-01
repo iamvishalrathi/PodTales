@@ -12,7 +12,7 @@ interface UsersListProps {
 const UsersList = ({ users, activeTab, searchQuery }: UsersListProps) => {
   if (!users || users.length === 0) {
     return (
-      <div className="min-h-[calc(70vh-100px)] sm:min-h-[calc(85vh-200px)] flex items-center justify-center py-6 sm:py-10">
+      <div className="min-h-[calc(70vh-200px)] sm:min-h-[calc(85vh-200px)] flex items-center justify-center py-6 sm:py-10">
         <EmptyState
           title={
             activeTab === "topPodcasters"
