@@ -127,19 +127,21 @@ const NotificationPage = () => {
           ))}
         </div>
       ) : (
-        <EmptyState
-          title="No notifications yet"
-          description="Join our community to connect with podcasters and get notified about new content"
-          icon={<Bell size={48} className="text-orange-1" />}
-          action={
-            <button 
-              onClick={() => router.push('/community')}
-              className="mt-4 px-6 py-2 bg-orange-1 hover:bg-orange-600 text-white font-medium rounded-full transition-colors"
-            >
-              Explore Community
-            </button>
-          }
-        />
+        <div className="min-h-[calc(90vh-200px)] sm:min-h-[calc(90vh-150px)] flex items-center justify-center py-6 sm:py-10">
+          <EmptyState
+            title="No notifications yet"
+            description="Join our community to connect with podcasters and get notified about new content"
+            icon={<Bell size={48} className="text-orange-1" />}
+            action={
+              <button 
+                onClick={() => router.push('/community')}
+                className="mt-4 px-6 py-2 bg-orange-1 hover:bg-orange-600 text-white font-medium rounded-full transition-colors"
+              >
+                Explore Community
+              </button>
+            }
+          />
+        </div>
       )}
     </div>
   );

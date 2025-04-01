@@ -43,7 +43,7 @@ const MobileNav = () => {
   }, []);
 
   return (
-    <section className="sticky top-0 z-50 bg-black-3">
+    <section className="sticky top-0 z-50">
       <Sheet>
         <SheetTrigger>
           <Image src="/icons/hamburger.svg" width={28} height={28} alt="menu" className="cursor-pointer" />
