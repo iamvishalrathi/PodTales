@@ -1,6 +1,7 @@
 import React from "react";
-import { Check, RefreshCw, Trash2 } from "lucide-react";
+import { Bell, Check, RefreshCw, Trash2 } from "lucide-react";
 import TabSelector, { TabType } from "@/components/ui/TabSelector";
+import { cn } from "@/lib/utils";
 
 interface NotificationHeaderProps {
     hasNotifications: boolean;
@@ -23,34 +24,55 @@ const NotificationHeader = ({
     onMarkAllAsRead,
     onMarkAllAsUnread,
 }: NotificationHeaderProps) => (
-    <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-white-1">Notifications</h1>
-        <div className="flex items-center gap-4">
+    <div className="flex items-center justify-between gap-2 mb-4 sm:mb-8">
+        <div className="flex items-center gap-2">
+            <Bell size={24} className="text-orange-1 sm:hidden" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-white-1">
+                <span className="hidden sm:inline">Notifications</span>
+            </h1>
+        </div>
+
+        <div className="flex items-center gap-1 sm:gap-4">
             {hasNotifications && (
                 <button
                     onClick={onClearAll}
-                    className="flex items-center gap-1 text-sm text-white-2 hover:text-red-500 transition-colors"
+                    className={cn(
+                        "hidden sm:flex items-center justify-center",
+                        "text-white-2 hover:text-red-500 transition-colors",
+                        "sm:w-auto sm:h-auto sm:rounded-none",
+                        "sm:hover:bg-transparent"
+                    )}
                 >
-                    <Trash2 size={16} />
-                    Clear all
+                    <Trash2 size={16} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline sm:ml-1">Clear all</span>
                 </button>
             )}
             {unreadCount > 0 && (
                 <button
                     onClick={onMarkAllAsRead}
-                    className="flex items-center gap-1 text-sm text-white-2 hover:text-orange-1 transition-colors"
+                    className={cn(
+                        "hidden sm:flex items-center justify-center",
+                        "text-white-2 hover:text-orange-1 transition-colors",
+                        "sm:w-auto sm:h-auto sm:rounded-none",
+                        "sm:hover:bg-transparent"
+                    )}
                 >
-                    <Check size={16} />
-                    Mark all as read
+                    <Check size={16} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline sm:ml-1">Mark all as read</span>
                 </button>
             )}
             {readCount > 0 && (
                 <button
                     onClick={onMarkAllAsUnread}
-                    className="flex items-center gap-1 text-sm text-white-2 hover:text-orange-1 transition-colors"
+                    className={cn(
+                        "hidden sm:flex items-center justify-center",
+                        "text-white-2 hover:text-orange-1 transition-colors",
+                        "sm:w-auto sm:h-auto sm:rounded-none",
+                        "sm:hover:bg-transparent"
+                    )}
                 >
-                    <RefreshCw size={16} />
-                    Mark all as unread
+                    <RefreshCw size={16} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline sm:ml-1">Mark all as unread</span>
                 </button>
             )}
             <TabSelector
