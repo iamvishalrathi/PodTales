@@ -30,7 +30,9 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         }
       >
         {podcast?.voicePrompt ? (
-          <p className="text-16 text-white-2 leading-relaxed whitespace-pre-wrap">{podcast?.voicePrompt}</p>
+          <div className="max-h-[200px] md:max-h-none overflow-y-auto scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent pr-2">
+            <p className="text-16 text-white-2 leading-relaxed whitespace-pre-wrap">{podcast?.voicePrompt}</p>
+          </div>
         ) : (
           <p className="text-16 text-gray-1 leading-relaxed italic">No transcription provided</p>
         )}

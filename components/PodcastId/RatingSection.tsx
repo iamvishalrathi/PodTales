@@ -34,15 +34,16 @@ const RatingSection = ({
         <div className="flex items-center gap-2">
             {podcast?.ratingCount && podcast.ratingCount > 0 && (
                 <>
-                    <div className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full">
+                    <div className="flex items-center gap-2 bg-black-1/50 px-3 sm:px-4 py-2 rounded-full">
                         <Star size={18} stroke="white" fill="orange" />
                         <span className="text-14 font-medium text-white-2">
-                            {podcast.averageRating?.toFixed(1)} ({podcast.ratingCount} ratings)
+                            <span className="hidden sm:inline">{podcast.averageRating?.toFixed(1)} ({podcast.ratingCount} ratings)</span>
+                            <span className="sm:hidden">{podcast.averageRating?.toFixed(1)}</span>
                         </span>
                     </div>
                     <button
                         onClick={() => setShowRatingAnalysis(!showRatingAnalysis)}
-                        className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full hover:bg-white-1/10 transition-colors"
+                        className="flex items-center gap-2 bg-black-1/50 px-3 sm:px-4 py-2 rounded-full hover:bg-white-1/10 transition-colors"
                     >
                         <ChartBar size={18} stroke="white" />
                         <span className="text-14 font-medium text-white-2 hidden sm:inline">
@@ -55,7 +56,7 @@ const RatingSection = ({
     );
 
     return (
-        <DetailSection title="Rate this Podcast" rightElement={ratingControls}>
+        <DetailSection title={<span><span className="hidden sm:inline">Rate this Podcast</span><span className="sm:hidden">Rate</span></span>} rightElement={ratingControls}>
             {showRatingAnalysis && podcast?.ratingCount && podcast.ratingCount > 0 && (
                 <div className="mb-6 bg-black-1/50 p-4 rounded-lg border border-white-1/10 animate-fadeIn">
                     <h3 className="text-white-1 font-medium mb-3">Rating Distribution</h3>

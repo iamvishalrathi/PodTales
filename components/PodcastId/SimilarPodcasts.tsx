@@ -2,7 +2,7 @@ import PodcastCard from '@/components/PodcastCard/GridPodcastCard';
 import EmptyState from '@/components/EmptyState';
 import ShowMoreLessButtons from '@/components/ShowMoreLessButtons';
 import PodcastCountDisplay from '@/components/PodcastCountDisplay';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Id } from '@/convex/_generated/dataModel';
 
 // Update the interface to match the actual podcast data structure
@@ -34,15 +34,20 @@ interface SimilarPodcastsProps {
 const SimilarPodcasts = ({ similarPodcasts }: SimilarPodcastsProps) => {
   const [visibleCount, setVisibleCount] = useState(3); // Initially show 3 podcasts
   const initialPodcastCount = 3; // Define a constant for the initial count
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Load more podcasts
   const loadMorePodcasts = () => {
     setVisibleCount(prev => prev + 3);
   };
 
-  // Show less podcasts
+  // Show less podcasts and scroll to top of section
   const showLessPodcasts = () => {
     setVisibleCount(initialPodcastCount);
+    // Scroll to the top of the section
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   // Determine if we can show more or less
@@ -54,7 +59,7 @@ const SimilarPodcasts = ({ similarPodcasts }: SimilarPodcastsProps) => {
   const totalPodcasts = similarPodcasts ? similarPodcasts.length : 0;
 
   return (
-    <section className="mt-12 mb-8">
+    <section ref={sectionRef} className="mt-12 mb-8">
       <div className="flex items-center gap-3 mb-6">
         <div className="h-6 w-1.5 bg-gradient-to-t from-orange-1 to-orange-400 rounded-full" />
         <h2 className="text-24 font-bold text-white-1">Similar Podcasts</h2>
