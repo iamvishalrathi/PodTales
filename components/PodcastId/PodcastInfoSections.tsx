@@ -48,7 +48,7 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
       
       setTranslationProgress(30); // Update progress
 
-      // Create translation prompt
+      // Create translation prompt with explicit instruction for thumbnail translation
       const translationPrompt = `
         Translate the following content from ${podcast.language || 'English'} to ${languageLabel}. 
         Return the response in JSON format with the following structure:
@@ -62,6 +62,8 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         Description: ${podcast.podcastDescription}
         Transcription: ${podcast.voicePrompt || ''}
         Thumbnail: ${podcast.imagePrompt || ''}
+
+        Important: Make sure to translate the thumbnail prompt even if it's in English, regardless of the source language of other content.
       `;
 
       setTranslationProgress(50); // Update progress
@@ -130,7 +132,7 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         </div>
 
         <p className="text-white-3 text-sm mb-4">
-          Translate podcast content to make it accessible to a global audience. Select a language below.
+          Select a language below.
         </p>
 
         <div className="space-y-4">
@@ -235,12 +237,29 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         )}
       </DetailSection>
 
-      {/* Thumbnail Prompt */}
-      <DetailSection title="Thumbnail Details">
+      {/* Thumbnail Prompt with Translation Status Indicator */}
+      <DetailSection 
+        title="Thumbnail Details"
+        rightElement={
+          translatedThumbnail ? (
+            <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1.5 rounded-full">
+              <Globe size={16} className="text-green-500" />
+              <span className="text-14 font-medium text-green-500">Translated</span>
+            </div>
+          ) : null
+        }
+      >
         {(translatedThumbnail || podcast?.imagePrompt) ? (
-          <p className="text-16 text-white-2 leading-relaxed">
-            {translatedThumbnail || podcast?.imagePrompt}
-          </p>
+          <div className="relative">
+            <p className="text-16 text-white-2 leading-relaxed">
+              {translatedThumbnail || podcast?.imagePrompt}
+            </p>
+            {podcast?.imagePrompt && !translatedThumbnail && selectedLanguage && (
+              <div className="mt-2 text-sm text-orange-1">
+                Click "Translate" to see this content in {languageOptions.find(l => l.value === selectedLanguage)?.label}
+              </div>
+            )}
+          </div>
         ) : (
           <p className="text-16 text-gray-1 leading-relaxed italic">Custom uploaded thumbnail</p>
         )}
