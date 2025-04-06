@@ -124,21 +124,23 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
   return (
     <>
       {/* Enhanced Translation Controls */}
-      <div className="mb-6 bg-gradient-to-r from-black-1/80 to-black-1/40 p-5 rounded-xl border border-white-1/10 shadow-lg">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="bg-orange-1/20 p-2 rounded-full">
-            <Globe size={20} className="text-orange-1" />
+      <div className="mb-6 bg-gradient-to-r from-black-1/80 to-black-1/40 p-3 sm:p-5 rounded-xl border border-white-1/10 shadow-lg">
+        <div className="flex items-center gap-2 mb-3 sm:mb-4">
+          <div className="bg-orange-1/20 p-1.5 sm:p-2 rounded-full">
+            <Globe size={18} className="text-orange-1" />
           </div>
-          <h3 className="text-18 font-semibold text-white-1">Translation Tools</h3>
+          <h3 className="text-16 sm:text-18 font-semibold text-white-1">
+            <span className="hidden sm:inline">Translation</span> Tools
+          </h3>
         </div>
 
-        <p className="text-white-3 text-sm mb-4">
+        <p className="text-white-3 text-xs sm:text-sm mb-3 sm:mb-4 hidden sm:block">
           Select a language below.
         </p>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {/* Language Selection - Updated to use Select component */}
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-3">
             <div className="sm:col-span-3">
               <Select
                 value={selectedLanguage}
@@ -146,9 +148,9 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
                 disabled={isTranslating}
               >
                 <SelectTrigger
-                  className="w-full bg-black-1/70 text-white-2 px-4 py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1 h-12"
+                  className="w-full bg-black-1/70 text-white-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1 h-10 sm:h-12 text-sm sm:text-base"
                 >
-                  <SelectValue placeholder="Select target language" />
+                  <SelectValue placeholder="Select language" />
                 </SelectTrigger>
                 <SelectContent className="bg-black-1/95 text-white-1 border-orange-1/10 rounded-xl max-h-[40vh]">
                   {languageOptions.map((option) => (
@@ -167,18 +169,20 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
             <div className="sm:col-span-1">
               <Button
                 onClick={() => translateContent(selectedLanguage)}
-                className="w-full bg-orange-1 hover:bg-orange-400 text-black font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 h-12"
+                className="w-full bg-orange-1 hover:bg-orange-400 text-black font-medium py-2 sm:py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1 sm:gap-2 h-10 sm:h-12 text-sm sm:text-base"
                 disabled={isTranslating || !selectedLanguage}
               >
                 {isTranslating ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    Translating...
+                    <span className="hidden sm:inline">Translating...</span>
+                    <span className="sm:hidden">Loading...</span>
                   </>
                 ) : (
                   <>
                     <Globe size={16} />
-                    Translate
+                    <span className="hidden sm:inline">Translate</span>
+                    <span className="sm:hidden">Go</span>
                   </>
                 )}
               </Button>
@@ -187,32 +191,36 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
 
           {/* Translation Progress */}
           {isTranslating && (
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               <div className="flex justify-between text-xs text-white-3">
-                <span>Translating content...</span>
+                <span className="hidden sm:inline">Translating content...</span>
+                <span className="sm:hidden">Translating...</span>
                 <span>{translationProgress}%</span>
               </div>
-              <Progress value={translationProgress} className="h-1.5" />
+              <Progress value={translationProgress} className="h-1 sm:h-1.5" />
             </div>
           )}
 
           {/* Translation Status */}
           {hasTranslation && (
-            <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <div className="flex items-center gap-2">
-                <Check size={16} className="text-green-500" />
-                <span className="text-white-1 text-sm">
-                  Content translated to {languageOptions.find(l => l.value === selectedLanguage)?.label}
+            <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-2 sm:p-3">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Check size={14} className="text-green-500" />
+                <span className="text-white-1 text-xs sm:text-sm">
+                  <span className="hidden sm:inline">Content translated to </span>
+                  <span className="sm:hidden">Translated: </span>
+                  {languageOptions.find(l => l.value === selectedLanguage)?.label}
                 </span>
               </div>
               <Button
                 onClick={resetTranslation}
                 variant="outline"
                 size="sm"
-                className="border-white-1/20 text-white-2 hover:bg-white-1/10 h-8"
+                className="border-white-1/20 text-white-2 hover:bg-white-1/10 h-7 sm:h-8 px-2 sm:px-3 text-xs sm:text-sm"
               >
-                <RefreshCw size={14} className="mr-1" />
-                Show Original
+                <RefreshCw size={12} className="mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Show Original</span>
+                <span className="sm:hidden">Reset</span>
               </Button>
             </div>
           )}
