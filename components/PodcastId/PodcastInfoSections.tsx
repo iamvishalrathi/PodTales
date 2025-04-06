@@ -140,12 +140,12 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
           {/* Language Selection - Updated to use Select component */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <div className="sm:col-span-3">
-              <Select 
-                value={selectedLanguage} 
+              <Select
+                value={selectedLanguage}
                 onValueChange={setSelectedLanguage}
                 disabled={isTranslating}
               >
-                <SelectTrigger 
+                <SelectTrigger
                   className="w-full bg-black-1/70 text-white-2 px-4 py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1 h-12"
                 >
                   <SelectValue placeholder="Select target language" />
@@ -232,9 +232,10 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         rightElement={
           <div className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full">
             <Mic2 size={20} stroke="white" />
-            <span className='hidden md:inline'>Voice: </span>
-            <span className="text-14 font-medium text-white-2">
-              {podcast?.voiceType}</span>
+            <div className="text-14 font-medium text-white-2">
+              <span className='hidden md:inline'>Voice: </span>
+              {podcast?.voiceType}
+            </div>
           </div>
         }
       >
