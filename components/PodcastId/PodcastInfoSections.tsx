@@ -45,7 +45,7 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
 
       // Import the chatSession dynamically to avoid server-side issues
       const { chatSession } = await import('@/service/Gemini');
-      
+
       setTranslationProgress(30); // Update progress
 
       // Create translation prompt with explicit instruction for thumbnail translation
@@ -222,7 +222,9 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         rightElement={
           <div className="flex items-center gap-2 bg-black-1/50 px-4 py-2 rounded-full">
             <Mic2 size={20} stroke="white" />
-            <span className="text-14 font-medium text-white-2">Voice: {podcast?.voiceType}</span>
+            <span className='hidden md:inline'>Voice: </span>
+            <span className="text-14 font-medium text-white-2">
+              {podcast?.voiceType}</span>
           </div>
         }
       >
@@ -238,7 +240,7 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
       </DetailSection>
 
       {/* Thumbnail Prompt with Translation Status Indicator */}
-      <DetailSection 
+      <DetailSection
         title="Thumbnail Details"
         rightElement={
           translatedThumbnail ? (
