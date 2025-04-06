@@ -127,7 +127,7 @@ const RightSidebar = () => {
                     <p className="text-sm text-white-3 italic py-2">No top podcasters available</p>
                 ) : (
                     <div className="flex flex-col">
-                        {slides.slice(0, 3).map((podcaster: TopPodcastersProps) => (
+                        {slides.slice(0, 4).map((podcaster: TopPodcastersProps) => (
                             <div
                                 key={podcaster._id}
                                 className="flex cursor-pointer justify-between hover:bg-black-2/50 hover:scale-[1.02] p-2 rounded-lg transition-all duration-300 ease-in-out"
