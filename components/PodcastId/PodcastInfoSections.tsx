@@ -5,6 +5,7 @@ import { languageOptions } from '@/constants/PodcastFields';
 import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
 import { Progress } from '../ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface PodcastInfoSectionsProps {
   podcast: {
@@ -136,28 +137,37 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
         </p>
 
         <div className="space-y-4">
-          {/* Language Selection */}
+          {/* Language Selection - Updated to use Select component */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <div className="sm:col-span-3">
-              <select
-                value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value)}
-                className="w-full bg-black-1/70 text-white-2 px-4 py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1"
+              <Select 
+                value={selectedLanguage} 
+                onValueChange={setSelectedLanguage}
                 disabled={isTranslating}
               >
-                <option value="">Select target language</option>
-                {languageOptions.map((lang) => (
-                  <option key={lang.value} value={lang.value}>
-                    {lang.label}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger 
+                  className="w-full bg-black-1/70 text-white-2 px-4 py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1 h-12"
+                >
+                  <SelectValue placeholder="Select target language" />
+                </SelectTrigger>
+                <SelectContent className="bg-black-1/95 text-white-1 border-orange-1/10 rounded-xl max-h-[40vh]">
+                  {languageOptions.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="focus:bg-orange-1/20 hover:bg-orange-1/10 transition-colors"
+                    >
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="sm:col-span-1">
               <Button
                 onClick={() => translateContent(selectedLanguage)}
-                className="w-full bg-orange-1 hover:bg-orange-400 text-black font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-orange-1 hover:bg-orange-400 text-black font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 h-12"
                 disabled={isTranslating || !selectedLanguage}
               >
                 {isTranslating ? (
@@ -242,14 +252,6 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
       {/* Thumbnail Prompt with Translation Status Indicator */}
       <DetailSection
         title="Thumbnail Details"
-        rightElement={
-          translatedThumbnail ? (
-            <div className="flex items-center gap-2 bg-green-500/20 px-3 py-1.5 rounded-full">
-              <Globe size={16} className="text-green-500" />
-              <span className="text-14 font-medium text-green-500">Translated</span>
-            </div>
-          ) : null
-        }
       >
         {(translatedThumbnail || podcast?.imagePrompt) ? (
           <div className="relative">
