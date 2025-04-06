@@ -1,5 +1,10 @@
-import { Calendar, Mic2 } from 'lucide-react';
+import { Calendar, Globe, Mic2, Loader2, Check, RefreshCw } from 'lucide-react';
 import DetailSection from './SectionDetail';
+import { useState } from 'react';
+import { languageOptions } from '@/constants/PodcastFields';
+import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
+import { Progress } from '../ui/progress';
 
 interface PodcastInfoSectionsProps {
   podcast: {
@@ -8,15 +13,205 @@ interface PodcastInfoSectionsProps {
     voiceType?: string;
     imagePrompt?: string;
     _creationTime: number;
+    language?: string;
   };
 }
 
 const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
+  const { toast } = useToast();
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [translatedDescription, setTranslatedDescription] = useState<string>("");
+  const [translatedTranscription, setTranslatedTranscription] = useState<string>("");
+  const [translatedThumbnail, setTranslatedThumbnail] = useState<string>("");
+  const [translationProgress, setTranslationProgress] = useState(0);
+
+  // Function to translate content using Gemini
+  const translateContent = async (targetLanguage: string) => {
+    if (!targetLanguage) {
+      toast({
+        title: "Please select a language",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsTranslating(true);
+    setTranslationProgress(10); // Start progress
+
+    try {
+      // Get language label for better UX
+      const languageLabel = languageOptions.find(l => l.value === targetLanguage)?.label || targetLanguage;
+
+      // Import the chatSession dynamically to avoid server-side issues
+      const { chatSession } = await import('@/service/Gemini');
+      
+      setTranslationProgress(30); // Update progress
+
+      // Create translation prompt
+      const translationPrompt = `
+        Translate the following content from ${podcast.language || 'English'} to ${languageLabel}. 
+        Return the response in JSON format with the following structure:
+        {
+          "description": "translated description",
+          "transcription": "translated transcription",
+          "thumbnail": "translated thumbnail details"
+        }
+        
+        Content to translate:
+        Description: ${podcast.podcastDescription}
+        Transcription: ${podcast.voicePrompt || ''}
+        Thumbnail: ${podcast.imagePrompt || ''}
+      `;
+
+      setTranslationProgress(50); // Update progress
+      const result = await chatSession.sendMessage(translationPrompt);
+      setTranslationProgress(70); // Update progress
+      const response = await result.response;
+      const text = response.text();
+      setTranslationProgress(90); // Update progress
+
+      try {
+        // Parse the JSON response
+        const sanitizedText = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        const translatedContent = JSON.parse(sanitizedText);
+
+        setTranslatedDescription(translatedContent.description);
+        setTranslatedTranscription(translatedContent.transcription);
+        setTranslatedThumbnail(translatedContent.thumbnail);
+        setTranslationProgress(100); // Complete progress
+
+        toast({
+          title: `Translated to ${languageLabel}`,
+          description: "Content has been translated successfully"
+        });
+      } catch (parseError) {
+        console.error('Error parsing translation response:', parseError);
+        toast({
+          title: 'Translation error',
+          description: 'Could not parse the translation response',
+          variant: 'destructive'
+        });
+      }
+    } catch (error) {
+      console.error('Translation error:', error);
+      toast({
+        title: 'Translation failed',
+        description: 'An error occurred during translation',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsTranslating(false);
+      // Reset progress after a delay
+      setTimeout(() => setTranslationProgress(0), 1000);
+    }
+  };
+
+  // Reset translations
+  const resetTranslation = () => {
+    setSelectedLanguage("");
+    setTranslatedDescription("");
+    setTranslatedTranscription("");
+    setTranslatedThumbnail("");
+  };
+
+  // Check if any content is translated
+  const hasTranslation = translatedDescription || translatedTranscription || translatedThumbnail;
+
   return (
     <>
+      {/* Enhanced Translation Controls */}
+      <div className="mb-6 bg-gradient-to-r from-black-1/80 to-black-1/40 p-5 rounded-xl border border-white-1/10 shadow-lg">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="bg-orange-1/20 p-2 rounded-full">
+            <Globe size={20} className="text-orange-1" />
+          </div>
+          <h3 className="text-18 font-semibold text-white-1">Translation Tools</h3>
+        </div>
+
+        <p className="text-white-3 text-sm mb-4">
+          Translate podcast content to make it accessible to a global audience. Select a language below.
+        </p>
+
+        <div className="space-y-4">
+          {/* Language Selection */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div className="sm:col-span-3">
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                className="w-full bg-black-1/70 text-white-2 px-4 py-2.5 rounded-lg border border-white-1/10 focus:outline-none focus:ring-2 focus:ring-orange-1"
+                disabled={isTranslating}
+              >
+                <option value="">Select target language</option>
+                {languageOptions.map((lang) => (
+                  <option key={lang.value} value={lang.value}>
+                    {lang.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="sm:col-span-1">
+              <Button
+                onClick={() => translateContent(selectedLanguage)}
+                className="w-full bg-orange-1 hover:bg-orange-400 text-black font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+                disabled={isTranslating || !selectedLanguage}
+              >
+                {isTranslating ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Translating...
+                  </>
+                ) : (
+                  <>
+                    <Globe size={16} />
+                    Translate
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Translation Progress */}
+          {isTranslating && (
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-white-3">
+                <span>Translating content...</span>
+                <span>{translationProgress}%</span>
+              </div>
+              <Progress value={translationProgress} className="h-1.5" />
+            </div>
+          )}
+
+          {/* Translation Status */}
+          {hasTranslation && (
+            <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <Check size={16} className="text-green-500" />
+                <span className="text-white-1 text-sm">
+                  Content translated to {languageOptions.find(l => l.value === selectedLanguage)?.label}
+                </span>
+              </div>
+              <Button
+                onClick={resetTranslation}
+                variant="outline"
+                size="sm"
+                className="border-white-1/20 text-white-2 hover:bg-white-1/10 h-8"
+              >
+                <RefreshCw size={14} className="mr-1" />
+                Show Original
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Description */}
       <DetailSection title="Description">
-        <p className="text-16 text-white-2 leading-relaxed">{podcast?.podcastDescription}</p>
+        <p className="text-16 text-white-2 leading-relaxed">
+          {translatedDescription || podcast?.podcastDescription}
+        </p>
       </DetailSection>
 
       {/* Transcription */}
@@ -29,9 +224,11 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
           </div>
         }
       >
-        {podcast?.voicePrompt ? (
+        {(translatedTranscription || podcast?.voicePrompt) ? (
           <div className="max-h-[200px] md:max-h-none overflow-y-auto scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent pr-2">
-            <p className="text-16 text-white-2 leading-relaxed whitespace-pre-wrap">{podcast?.voicePrompt}</p>
+            <p className="text-16 text-white-2 leading-relaxed whitespace-pre-wrap">
+              {translatedTranscription || podcast?.voicePrompt}
+            </p>
           </div>
         ) : (
           <p className="text-16 text-gray-1 leading-relaxed italic">No transcription provided</p>
@@ -40,8 +237,10 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
 
       {/* Thumbnail Prompt */}
       <DetailSection title="Thumbnail Details">
-        {podcast?.imagePrompt ? (
-          <p className="text-16 text-white-2 leading-relaxed">{podcast?.imagePrompt}</p>
+        {(translatedThumbnail || podcast?.imagePrompt) ? (
+          <p className="text-16 text-white-2 leading-relaxed">
+            {translatedThumbnail || podcast?.imagePrompt}
+          </p>
         ) : (
           <p className="text-16 text-gray-1 leading-relaxed italic">Custom uploaded thumbnail</p>
         )}
