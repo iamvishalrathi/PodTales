@@ -1,7 +1,7 @@
 const authConfig= {
     providers: [
         {
-            domain: "https://active-sloth-79.clerk.accounts.dev",
+            domain: process.env.CONVEX_AUTH_DOMAIN,
             applicationID: "convex",
         },
     ]
