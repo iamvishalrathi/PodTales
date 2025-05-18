@@ -5,6 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useDebounce } from "@/lib/useDebounce";
 
@@ -25,6 +26,32 @@ const AdminManagement = () => {
 
   // Query to get admin users
   const adminUsers = useQuery(api.users.getAdminUsers);
+
+  const handleRemoveAdmin = async (adminId: string) => {
+    if (!user?.id) return;
+    
+    try {
+      await setUserAdmin({
+        userId: adminId,
+        isAdmin: false,
+        requestingUserId: user.id
+      });
+      
+      toast({
+        title: "Admin removed",
+        description: "User's admin privileges have been revoked",
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error("Error removing admin:", error);
+      toast({
+        title: "Error removing admin",
+        description: error instanceof Error ? error.message : "Please try again",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  };
   
   const handleAddAdmin = async () => {
     if (!userId.trim() || !user?.id) return;
@@ -72,19 +99,31 @@ const AdminManagement = () => {
           {adminUsers?.map((admin) => (
             <div 
               key={admin.clerkId} 
-              className="flex items-center gap-3 bg-black-1/50 p-3 rounded-lg border border-gray-800"
+              className="flex items-center justify-between gap-3 bg-black-1/50 p-3 rounded-lg border border-gray-800"
             >
-              <Image
-                src={admin.imageUrl}
-                alt={admin.name}
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <div>
-                <p className="text-white-1 font-medium text-sm">{admin.name}</p>
-                <p className="text-white-3 text-xs">{admin.email}</p>
+              <div className="flex items-center gap-3">
+                <Image
+                  src={admin.imageUrl}
+                  alt={admin.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="text-white-1 font-medium text-sm">{admin.name}</p>
+                  <p className="text-white-3 text-xs">{admin.email}</p>
+                </div>
               </div>
+              {user?.id !== admin.clerkId && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleRemoveAdmin(admin.clerkId)}
+                  className="text-red-500 hover:text-red-600 hover:bg-red-500/10 h-8 w-8"
+                >
+                  <Trash2 size={16} />
+                </Button>
+              )}
             </div>
           ))}
         </div>
