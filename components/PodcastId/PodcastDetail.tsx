@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "convex/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Play, MoreVertical, Trash2, Heart, Share2, Check } from 'lucide-react';
+import { Play, Trash2, Heart, Share2, Check } from 'lucide-react';
 import MusicBars from '../MusicBars';
 
 import { api } from "@/convex/_generated/api";
@@ -14,6 +14,7 @@ import LoaderSpinner from "../LoaderSpinner";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@clerk/nextjs";
+import ReportDialog from "./ReportDialog";
 
 const PodcastDetail = ({
   audioUrl,
@@ -224,17 +225,20 @@ const PodcastDetail = ({
                 </span>
               </Button>
 
+              {/* Only show report button if not the owner */}
+              {!isOwner && (
+                <ReportDialog podcastId={podcastId} podcastTitle={podcastTitle} />
+              )}
+
               {isOwner && (
-                <div className="relative">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:bg-black-1/50 size-10 sm:size-12 text-white-2 hover:text-red-500"
-                    onClick={handleDelete}
-                  >
-                    <Trash2 size={18} stroke="currentColor" />
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-black-1/50 size-10 sm:size-12 text-white-2 hover:text-red-500"
+                  onClick={handleDelete}
+                >
+                  <Trash2 size={18} stroke="currentColor" />
+                </Button>
               )}
             </div>
           </div>

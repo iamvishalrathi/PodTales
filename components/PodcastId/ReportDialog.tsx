@@ -1,0 +1,119 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Flag } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+
+interface ReportDialogProps {
+    podcastId: string;
+    podcastTitle: string;
+}
+
+const reportOptions = [
+    { id: "inappropriate", label: "Inappropriate content" },
+    { id: "copyright", label: "Copyright violation" },
+    { id: "offensive", label: "Offensive language" },
+    { id: "misinformation", label: "Misinformation" },
+    { id: "other", label: "Other" }
+];
+
+const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [open, setOpen] = useState(false);
+    const { toast } = useToast();
+
+    const handleSubmit = async () => {
+        if (!selectedOption) {
+            toast({
+                title: "Please select a reason",
+                variant: "destructive",
+                duration: 3000,
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        // Here you would typically call your API to submit the report
+        // For now, we'll just simulate a successful submission
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setOpen(false);
+            setSelectedOption(null);
+
+            toast({
+                title: "Report submitted",
+                description: "Thank you for helping keep our platform safe",
+                duration: 3000,
+            });
+        }, 1000);
+    };
+
+    return (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-black-1/50 size-10 sm:size-12 text-white-2 hover:text-red-500"
+                    title="Report podcast"
+                >
+                    <Flag size={18} stroke="currentColor" />
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-black-1/95 border border-gray-800 text-white-1 max-w-md">
+                <DialogHeader>
+                    <DialogTitle className="text-xl font-bold text-white-1">
+                        Report Podcast
+                    </DialogTitle>
+                </DialogHeader>
+
+                <div className="mt-4">
+                    <p className="text-white-2 mb-4">
+                        Why are you reporting "{podcastTitle}"?
+                    </p>
+
+                    <div className="space-y-2">
+                        {reportOptions.map((option) => (
+                            <div
+                                key={option.id}
+                                className={`p-3 rounded-lg cursor-pointer transition-all ${selectedOption === option.id
+                                        ? "bg-orange-1/20 border border-orange-1"
+                                        : "bg-black-1/50 border border-gray-800 hover:bg-black-1/70"
+                                    }`}
+                                onClick={() => setSelectedOption(option.id)}
+                            >
+                                <p className={`${selectedOption === option.id ? "text-orange-1" : "text-white-2"}`}>
+                                    {option.label}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-end gap-3 mt-6">
+                        <Button
+                            variant="outline"
+                            onClick={() => {
+                                setOpen(false);
+                                setSelectedOption(null);
+                            }}
+                            className="bg-transparent border-gray-700 text-white-2 hover:bg-black-1/50"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleSubmit}
+                            disabled={!selectedOption || isSubmitting}
+                            className={`${!selectedOption ? "bg-white-1/10 text-white-3 cursor-not-allowed" : "bg-orange-1 text-black hover:bg-orange-2"}`}
+                        >
+                            {isSubmitting ? "Submitting..." : "Submit Report"}
+                        </Button>
+                    </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+};
+
+export default ReportDialog;
