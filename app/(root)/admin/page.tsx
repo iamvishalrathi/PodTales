@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import ReportManagement from "@/components/Admin/ReportManagement";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import AdminManagement from "@/components/Admin/AdminManagement";
+import Link from "next/link";
 
 const AdminPage = () => {
     const { user, isLoaded } = useUser();
@@ -53,14 +52,16 @@ const AdminPage = () => {
             <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
                 <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white-1">Admin Dashboard</h1>
 
-                {/* Admin Management Section */}
-                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
-                    <AdminManagement />
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Link href="/admin/management" className="bg-black-1/30 border border-gray-800 rounded-xl p-6 hover:bg-black-1/40 transition-colors">
+                        <h2 className="text-xl font-bold text-white-1 mb-2">Admin Management</h2>
+                        <p className="text-white-3">Manage admin users and permissions</p>
+                    </Link>
 
-                {/* Report Management Section */}
-                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-4 sm:p-6">
-                    <ReportManagement />
+                    <Link href="/admin/reports" className="bg-black-1/30 border border-gray-800 rounded-xl p-6 hover:bg-black-1/40 transition-colors">
+                        <h2 className="text-xl font-bold text-white-1 mb-2">Report Management</h2>
+                        <p className="text-white-3">Handle user reports and content moderation</p>
+                    </Link>
                 </div>
             </div>
         </div>
