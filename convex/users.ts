@@ -196,3 +196,52 @@ export const updateUserProfile = mutation({
     return { success: true };
   },
 });
+
+
+// Check if a user is an admin
+export const isUserAdmin = query({
+  args: { userId: v.string() },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .filter(q => q.eq(q.field("clerkId"), args.userId))
+      .first();
+    
+    return user?.isAdmin === true;
+  },
+});
+
+// Set user as admin (for authorized users only)
+export const setUserAdmin = mutation({
+  args: { 
+    userId: v.string(),
+    isAdmin: v.boolean(),
+    requestingUserId: v.string() 
+  },
+  handler: async (ctx, args) => {
+    // Security check: Only existing admins can set admin status
+    const requestingUser = await ctx.db
+      .query("users")
+      .filter(q => q.eq(q.field("clerkId"), args.requestingUserId))
+      .first();
+    
+    if (!requestingUser?.isAdmin) {
+      throw new Error("Unauthorized: Only admins can set admin status");
+    }
+    
+    // Find the user to update
+    const userToUpdate = await ctx.db
+      .query("users")
+      .filter(q => q.eq(q.field("clerkId"), args.userId))
+      .first();
+    
+    if (!userToUpdate) {
+      throw new Error("User not found");
+    }
+    
+    // Update the user's admin status
+    await ctx.db.patch(userToUpdate._id, { isAdmin: args.isAdmin });
+    
+    return { success: true };
+  },
+});

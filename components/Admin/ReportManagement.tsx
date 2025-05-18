@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useToast } from "@/components/ui/use-toast";
@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@clerk/nextjs";
+import LoaderSpinner from "@/components/LoaderSpinner";
 
 const ReportManagement = () => {
     const [activeTab, setActiveTab] = useState("pending");
     const [reviewNotes, setReviewNotes] = useState<Record<string, string>>({});
+    const [reporterNames, setReporterNames] = useState<Record<string, string>>({});
     
     const { user } = useUser();
     const { toast } = useToast();
@@ -19,13 +21,34 @@ const ReportManagement = () => {
         status: activeTab === "all" ? undefined : activeTab 
     });
     
-    // Add a query to get user information
-    const getUserInfo = useQuery(api.users.getUserById, {
-        clerkId: reports?.[0]?.reportedBy || "skip"
-    });
-    
     // Update report status mutation
     const updateReportStatus = useMutation(api.reports.updateReportStatus);
+    
+    // Fetch user information for each report
+    useEffect(() => {
+        const fetchReporterNames = async () => {
+            if (!reports || reports.length === 0) return;
+            
+            const newReporterNames: Record<string, string> = {};
+            
+            for (const report of reports) {
+                if (report.reportedBy && !reporterNames[report.reportedBy]) {
+                    try {
+                        const userInfo = await fetch(`/api/users/${report.reportedBy}`);
+                        const userData = await userInfo.json();
+                        newReporterNames[report.reportedBy] = userData.name || "Unknown User";
+                    } catch (error) {
+                        console.error("Error fetching user info:", error);
+                        newReporterNames[report.reportedBy] = "Unknown User";
+                    }
+                }
+            }
+            
+            setReporterNames(prev => ({ ...prev, ...newReporterNames }));
+        };
+        
+        fetchReporterNames();
+    }, [reports, reporterNames]);
     
     const handleStatusUpdate = async (reportId: string, newStatus: string) => {
         if (!user?.id) return;
@@ -54,9 +77,11 @@ const ReportManagement = () => {
         }
     };
     
+    if (!reports) return <LoaderSpinner />;
+    
     return (
-        <div className="container mx-auto py-8">
-            <h1 className="text-2xl font-bold mb-6 text-white-1">Report Management</h1>
+        <div>
+            <h2 className="text-xl font-bold mb-6 text-white-1">Report Management</h2>
             
             <Tabs defaultValue="pending" onValueChange={setActiveTab}>
                 <TabsList className="mb-6">
@@ -101,7 +126,9 @@ const ReportManagement = () => {
                                     {report.reportedBy && (
                                         <div>
                                             <p className="text-white-2 text-sm mb-1">Reported By:</p>
-                                            <p className="text-white-1">{report.reportedBy}</p>
+                                            <p className="text-white-1">
+                                                {reporterNames[report.reportedBy] || report.reportedBy}
+                                            </p>
                                         </div>
                                     )}
                                     

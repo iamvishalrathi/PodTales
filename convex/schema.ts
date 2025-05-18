@@ -43,6 +43,7 @@ export default defineSchema({
       platform: v.string(),
       url: v.string()
     }))),
+    isAdmin: v.optional(v.boolean()),
   }),
   ratings: defineTable({
     podcastId: v.id("podcasts"),
@@ -84,18 +85,18 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_creator", ["creatorId"])
     .index("by_podcast", ["podcastId"]),
-});
-
-// Report table schema
-export const reports = defineTable({
-  podcastId: v.id("podcasts"),
-  podcastTitle: v.string(),
-  reportType: v.string(), // inappropriate, copyright, offensive, misinformation, other
-  details: v.optional(v.string()),
-  contactEmail: v.optional(v.string()),
-  reportedBy: v.optional(v.id("users")), // Optional in case anonymous reports are allowed
-  status: v.string(), // pending, reviewed, resolved, dismissed
-  reviewedBy: v.optional(v.id("users")),
-  reviewNotes: v.optional(v.string()),
-  _creationTime: v.number(), // Automatically added by Convex
+    
+  reports: defineTable({
+    podcastId: v.id("podcasts"),
+    podcastTitle: v.string(),
+    reportType: v.string(), // inappropriate, copyright, offensive, misinformation, other
+    details: v.optional(v.string()),
+    contactEmail: v.optional(v.string()),
+    reportedBy: v.optional(v.string()), // Changed to string for Clerk user ID
+    status: v.string(), // pending, reviewed, resolved, dismissed
+    reviewedBy: v.optional(v.string()), // Changed to string for Clerk user ID
+    reviewNotes: v.optional(v.string()),
+  })
+    .index("by_status", ["status"])
+    .index("by_podcast", ["podcastId"]),
 });
