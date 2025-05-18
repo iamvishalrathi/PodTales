@@ -33,9 +33,6 @@ const MobileNav = () => {
   // Check if there are any unread notifications
   const hasUnreadNotifications = notifications?.some(notification => !notification.isRead) || false;
 
-  // Remove the filtering of sidebar links
-  const filteredSidebarLinks = sidebarLinks;
-
   // Show title with a slight delay for animation effect
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -67,7 +64,7 @@ const MobileNav = () => {
           </Link>
           
           <nav className="flex flex-col gap-2 text-white-1 flex-1 overflow-y-auto">
-            {filteredSidebarLinks.map(({ route, label, icon: Icon }) => {
+            {sidebarLinks.map(({ route, label, icon: Icon }) => {
               // For profile route, check if the current path is the user's profile
               const isProfileRoute = route === "/profile";
               const userProfilePath = user ? `/profile/${user?.id}` : "/sign-in";

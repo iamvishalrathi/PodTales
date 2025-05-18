@@ -27,9 +27,6 @@ const LeftSidebar = () => {
     // Check if there are any unread notifications
     const hasUnreadNotifications = notifications?.some(notification => !notification.isRead) || false;
 
-    // Remove the filtering of sidebar links
-    const filteredSidebarLinks = sidebarLinks;
-
     return (
         <section className={cn("left_sidebar h-[calc(100vh-5px)] transition-all duration-300", {
             'h-[calc(100vh-80px)]': audio?.audioUrl
@@ -49,7 +46,7 @@ const LeftSidebar = () => {
                 </Link>
 
                 <div className="flex flex-col space-y-1 w-full">
-                    {filteredSidebarLinks.map(({ route, label, icon: Icon }) => {
+                    {sidebarLinks.map(({ route, label, icon: Icon }) => {
                         // For profile route, check if the current path is the user's profile
                         const isProfileRoute = route === "/profile";
                         const userProfilePath = user ? `/profile/${user.id}` : "/sign-in";
