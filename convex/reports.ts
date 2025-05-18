@@ -9,7 +9,7 @@ export const submitReport = mutation({
         reportType: v.string(),
         details: v.optional(v.string()),
         contactEmail: v.optional(v.string()),
-        reportedBy: v.optional(v.string()), // Changed from v.id("users") to v.optional(v.string())
+        reportedBy: v.string(), // User's Clerk ID who reported
     },
     handler: async (ctx, args) => {
         const reportId = await ctx.db.insert("reports", {

@@ -19,6 +19,11 @@ const ReportManagement = () => {
         status: activeTab === "all" ? undefined : activeTab 
     });
     
+    // Add a query to get user information
+    const getUserInfo = useQuery(api.users.getUserById, {
+        clerkId: reports?.[0]?.reportedBy || "skip"
+    });
+    
     // Update report status mutation
     const updateReportStatus = useMutation(api.reports.updateReportStatus);
     
@@ -92,6 +97,13 @@ const ReportManagement = () => {
                                             {new Date(report._creationTime).toLocaleDateString()}
                                         </p>
                                     </div>
+                                    
+                                    {report.reportedBy && (
+                                        <div>
+                                            <p className="text-white-2 text-sm mb-1">Reported By:</p>
+                                            <p className="text-white-1">{report.reportedBy}</p>
+                                        </div>
+                                    )}
                                     
                                     {report.details && (
                                         <div className="md:col-span-2">

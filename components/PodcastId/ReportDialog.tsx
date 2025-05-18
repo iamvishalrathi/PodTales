@@ -54,9 +54,8 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
                 reportType: selectedOption,
                 details: additionalDetails || undefined,
                 contactEmail: contactEmail || undefined,
-                // Remove the reportedBy field if user is not logged in
-                // or pass undefined to make it optional
-                reportedBy: undefined,
+                // Pass the user's ID if they are logged in
+                reportedBy: user?.id || undefined,
             });
 
             setIsSubmitting(false);
