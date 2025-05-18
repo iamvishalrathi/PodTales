@@ -42,7 +42,9 @@ const AdminManagement = () => {
         duration: 3000,
       });
       
+      // Reset both userId and searchTerm
       setUserId("");
+      setSearchTerm("");
     } catch (error) {
       console.error("Error adding admin:", error);
       toast({
@@ -54,6 +56,11 @@ const AdminManagement = () => {
     }
   };
   
+  const handleUserSelect = (selectedUser: any) => {
+    setUserId(selectedUser.clerkId);
+    setSearchTerm(selectedUser.name + ' (' + selectedUser.clerkId + ')');
+  };
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-6 text-white-1">Admin Management</h2>
@@ -102,10 +109,7 @@ const AdminManagement = () => {
                   <div
                     key={user.clerkId}
                     className="flex items-center gap-3 p-2 hover:bg-black-2 cursor-pointer"
-                    onClick={() => {
-                      setUserId(user.clerkId);
-                      setSearchTerm(user.name);
-                    }}
+                    onClick={() => handleUserSelect(user)}
                   >
                     <Image
                       src={user.imageUrl}
