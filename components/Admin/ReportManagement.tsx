@@ -34,9 +34,9 @@ const ReportManagement = () => {
             for (const report of reports) {
                 if (report.reportedBy && !reporterNames[report.reportedBy]) {
                     try {
-                        const userInfo = await fetch(`/api/users/${report.reportedBy}`);
-                        const userData = await userInfo.json();
-                        newReporterNames[report.reportedBy] = userData.name || "Unknown User";
+                        // Replace API call with direct Convex query
+                        const userData = await fetchUserById({ clerkId: report.reportedBy });
+                        newReporterNames[report.reportedBy] = userData?.name || "Unknown User";
                     } catch (error) {
                         console.error("Error fetching user info:", error);
                         newReporterNames[report.reportedBy] = "Unknown User";
@@ -201,3 +201,6 @@ const ReportManagement = () => {
 };
 
 export default ReportManagement;
+
+// Add this near your other hooks
+const fetchUserById = useMutation(api.users.getUserById);
