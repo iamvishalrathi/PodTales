@@ -5,6 +5,9 @@ import { Flag } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
 
 interface ReportDialogProps {
     podcastId: string;
@@ -26,6 +29,10 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [open, setOpen] = useState(false);
     const { toast } = useToast();
+    const { user } = useUser();
+    
+    // Use the Convex mutation
+    const submitReport = useMutation(api.reports.submitReport);
 
     const handleSubmit = async () => {
         if (!selectedOption) {
@@ -39,9 +46,19 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
 
         setIsSubmitting(true);
 
-        // Here you would typically call your API to submit the report
-        // For now, we'll just simulate a successful submission
-        setTimeout(() => {
+        try {
+            // Submit the report to the database
+            await submitReport({
+                podcastId,
+                podcastTitle,
+                reportType: selectedOption,
+                details: additionalDetails || undefined,
+                contactEmail: contactEmail || undefined,
+                // Remove the reportedBy field if user is not logged in
+                // or pass undefined to make it optional
+                reportedBy: undefined,
+            });
+
             setIsSubmitting(false);
             setOpen(false);
 
@@ -55,7 +72,17 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
                 description: "Thank you for helping keep our platform safe",
                 duration: 3000,
             });
-        }, 1000);
+        } catch (error) {
+            console.error("Error submitting report:", error);
+            setIsSubmitting(false);
+            
+            toast({
+                title: "Error submitting report",
+                description: "Please try again later",
+                variant: "destructive",
+                duration: 3000,
+            });
+        }
     };
 
     return (

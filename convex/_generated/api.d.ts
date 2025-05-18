@@ -29,6 +29,7 @@ import type * as podcasts_helper from "../podcasts/helper.js";
 import type * as podcasts_index from "../podcasts/index.js";
 import type * as podcasts_social from "../podcasts/social.js";
 import type * as podcasts from "../podcasts.js";
+import type * as reports from "../reports.js";
 import type * as users from "../users.js";
 
 /**
@@ -54,6 +55,7 @@ declare const fullApi: ApiFromModules<{
   "podcasts/index": typeof podcasts_index;
   "podcasts/social": typeof podcasts_social;
   podcasts: typeof podcasts;
+  reports: typeof reports;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
