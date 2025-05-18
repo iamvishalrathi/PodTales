@@ -7,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import LoaderSpinner from "@/components/LoaderSpinner";
+import { useConvex } from "convex/react";
 
 const ReportManagement = () => {
     const [activeTab, setActiveTab] = useState("pending");
@@ -15,6 +16,7 @@ const ReportManagement = () => {
 
     const { user } = useUser();
     const { toast } = useToast();
+    const convex = useConvex();
 
     // Get reports based on active tab
     const reports = useQuery(api.reports.getReports, {
@@ -24,24 +26,29 @@ const ReportManagement = () => {
     // Update report status mutation
     const updateReportStatus = useMutation(api.reports.updateReportStatus);
 
-    // Fetch user information for each report
+    // Extract unique reporter IDs from reports
+    const reporterIds = reports
+        ? [...new Set(reports.filter(r => r.reportedBy).map(r => r.reportedBy))]
+        : [];
+
+    // Fetch user information for reporters when reports change
     useEffect(() => {
         const fetchReporterNames = async () => {
-            if (!reports || reports.length === 0) return;
+            if (!reporterIds.length) return;
 
             const newReporterNames: Record<string, string> = {};
 
-            for (const report of reports) {
-                if (report.reportedBy && !reporterNames[report.reportedBy]) {
+            for (const reporterId of reporterIds) {
+                if (!reporterNames[reporterId]) {
                     try {
-                        // Use the query with proper parameters
-                        const userData = await api.users.getUserById({ clerkId: report.reportedBy });
+                        // Use the useQuery hook to fetch user data instead of calling the API directly
+                        const userData = await convex.query(api.users.getUserById, { clerkId: reporterId });
                         if (userData) {
-                            newReporterNames[report.reportedBy] = userData.name || "Unknown User";
+                            newReporterNames[reporterId] = userData.name || "Unknown User";
                         }
                     } catch (error) {
                         console.error("Error fetching user info:", error);
-                        newReporterNames[report.reportedBy] = "Unknown User";
+                        newReporterNames[reporterId] = "Unknown User";
                     }
                 }
             }
@@ -52,7 +59,7 @@ const ReportManagement = () => {
         };
 
         fetchReporterNames();
-    }, [reports]); // Remove reporterNames from the dependency array
+    }, [reporterIds]);
 
     const handleStatusUpdate = async (reportId: string, newStatus: string) => {
         if (!user?.id) return;
@@ -105,9 +112,9 @@ const ReportManagement = () => {
                                 <div className="flex justify-between mb-2">
                                     <h3 className="text-lg font-semibold text-white-1">{report.podcastTitle}</h3>
                                     <span className={`px-2 py-1 rounded text-xs font-medium ${report.status === "pending" ? "bg-yellow-500/20 text-yellow-500" :
-                                            report.status === "reviewed" ? "bg-blue-500/20 text-blue-500" :
-                                                report.status === "resolved" ? "bg-green-500/20 text-green-500" :
-                                                    "bg-red-500/20 text-red-500"
+                                        report.status === "reviewed" ? "bg-blue-500/20 text-blue-500" :
+                                            report.status === "resolved" ? "bg-green-500/20 text-green-500" :
+                                                "bg-red-500/20 text-red-500"
                                         }`}>
                                         {report.status}
                                     </span>
