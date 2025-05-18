@@ -153,7 +153,9 @@ const PodcastInfoSections = ({ podcast }: PodcastInfoSectionsProps) => {
                   <SelectValue placeholder="Select language" />
                 </SelectTrigger>
                 <SelectContent className="bg-black-1/95 text-white-1 border-orange-1/10 rounded-xl max-h-[40vh]">
-                  {languageOptions.map((option) => (
+                  {languageOptions
+                    .filter(option => option.value !== podcast.language)
+                    .map((option) => (
                     <SelectItem
                       key={option.value}
                       value={option.value}
