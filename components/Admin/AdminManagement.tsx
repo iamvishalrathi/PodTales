@@ -1,18 +1,27 @@
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
+import { useDebounce } from "@/lib/useDebounce";
 
 const AdminManagement = () => {
   const { user } = useUser();
   const { toast } = useToast();
   const [userId, setUserId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebounce(searchTerm, 300);
   
   // Mutation to set a user as admin
   const setUserAdmin = useMutation(api.users.setUserAdmin);
+  
+  // Query to search users
+  const users = useQuery(api.users.searchUsers, { 
+    searchTerm: debouncedSearch 
+  });
   
   const handleAddAdmin = async () => {
     if (!userId.trim() || !user?.id) return;
@@ -49,13 +58,43 @@ const AdminManagement = () => {
       <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4 mb-6">
         <h3 className="text-lg font-semibold text-white-1 mb-4">Add New Admin</h3>
         
-        <div className="flex gap-2">
-          <Input
-            placeholder="Enter Clerk User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            className="bg-black-1/50 border border-gray-800 text-white-2"
-          />
+        <div className="flex flex-col gap-4">
+          <div className="relative">
+            <Input
+              placeholder="Search user by name or ID..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-black-1/50 border border-gray-800 text-white-2"
+            />
+            
+            {users && users.length > 0 && searchTerm && (
+              <div className="absolute z-10 w-full mt-1 bg-black-1 border border-gray-800 rounded-lg max-h-60 overflow-y-auto">
+                {users.map((user) => (
+                  <div
+                    key={user.clerkId}
+                    className="flex items-center gap-3 p-2 hover:bg-black-2 cursor-pointer"
+                    onClick={() => {
+                      setUserId(user.clerkId);
+                      setSearchTerm(user.name);
+                    }}
+                  >
+                    <Image
+                      src={user.imageUrl}
+                      alt={user.name}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <p className="text-white-1 text-sm font-medium">{user.name}</p>
+                      <p className="text-white-3 text-xs">{user.clerkId}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <Button
             onClick={handleAddAdmin}
             disabled={!userId.trim()}
@@ -66,7 +105,7 @@ const AdminManagement = () => {
         </div>
         
         <p className="text-white-3 text-sm mt-2">
-          Note: Enter the Clerk ID of the user you want to grant admin privileges to.
+          Note: Search for a user by their name or Clerk ID to grant them admin privileges.
         </p>
       </div>
     </div>

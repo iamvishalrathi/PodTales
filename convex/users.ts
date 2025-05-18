@@ -244,3 +244,22 @@ export const setUserAdmin = mutation({
     return { success: true };
   },
 });
+
+// Search users by name or clerkId
+export const searchUsers = query({
+  args: { searchTerm: v.string() },
+  handler: async (ctx, args) => {
+    if (!args.searchTerm) return [];
+
+    const searchTermLower = args.searchTerm.toLowerCase();
+    const users = await ctx.db
+      .query("users")
+      .collect();
+
+    // Filter users on the application side
+    return users.filter((user) => 
+      user.name.toLowerCase().includes(searchTermLower) ||
+      user.clerkId.toLowerCase().includes(searchTermLower)
+    );
+  },
+});
