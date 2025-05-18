@@ -263,3 +263,22 @@ export const searchUsers = query({
     );
   },
 });
+
+// Get all admin users
+export const getAdminUsers = query({
+  args: {},
+  handler: async (ctx) => {
+    const adminUsers = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("isAdmin"), true))
+      .collect();
+
+    return adminUsers.map(user => ({
+      id: user._id,
+      name: user.name,
+      imageUrl: user.imageUrl,
+      email: user.email,
+      clerkId: user.clerkId
+    }));
+  },
+});
