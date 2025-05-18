@@ -46,11 +46,13 @@ const ReportManagement = () => {
                 }
             }
 
-            setReporterNames(prev => ({ ...prev, ...newReporterNames }));
+            if (Object.keys(newReporterNames).length > 0) {
+                setReporterNames(prev => ({ ...prev, ...newReporterNames }));
+            }
         };
 
         fetchReporterNames();
-    }, [reports, reporterNames]);
+    }, [reports]); // Remove reporterNames from the dependency array
 
     const handleStatusUpdate = async (reportId: string, newStatus: string) => {
         if (!user?.id) return;

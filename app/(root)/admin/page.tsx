@@ -49,17 +49,17 @@ const AdminPage = () => {
     }
 
     return (
-        <div className="min-h-screen">
-            <div className="container mx-auto py-8">
-                <h1 className="text-3xl font-bold mb-8 text-white-1">Admin Dashboard</h1>
+        <div className="min-h-[calc(100vh-80px)]">
+            <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white-1">Admin Dashboard</h1>
 
                 {/* Admin Management Section */}
-                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-6 mb-8">
+                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                     <AdminManagement />
                 </div>
 
                 {/* Report Management Section */}
-                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-6 mb-8">
+                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-4 sm:p-6">
                     <ReportManagement />
                 </div>
             </div>
