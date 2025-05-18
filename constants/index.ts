@@ -1,4 +1,4 @@
-import { Home, Compass, Mic, Bell, Users, User } from "lucide-react";
+import { Home, Compass, Mic, Bell, Users, User, Settings } from "lucide-react";
 
 export const sidebarLinks = [
   {
@@ -30,5 +30,11 @@ export const sidebarLinks = [
     icon: User,
     route: "/profile",
     label: "My Profile",
+  },
+  {
+    icon: Settings,
+    route: "/admin",
+    label: "Admin",
+    adminOnly: true,
   },
 ];
