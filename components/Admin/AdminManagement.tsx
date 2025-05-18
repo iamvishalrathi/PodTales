@@ -99,8 +99,18 @@ const AdminManagement = () => {
           {adminUsers?.map((admin) => (
             <div 
               key={admin.clerkId} 
-              className="flex items-center justify-between gap-3 bg-black-1/50 p-3 rounded-lg border border-gray-800"
+              className="relative bg-black-1/50 p-3 rounded-lg border border-gray-800"
             >
+              {user?.id !== admin.clerkId && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleRemoveAdmin(admin.clerkId)}
+                  className="absolute top-2 right-2 text-red-500 hover:text-red-600 p-0 h-6 w-6 transition-colors hover:bg-transparent"
+                >
+                  <Trash2 size={14} />
+                </Button>
+              )}
               <div className="flex items-center gap-3">
                 <Image
                   src={admin.imageUrl}
@@ -114,16 +124,6 @@ const AdminManagement = () => {
                   <p className="text-white-3 text-xs">{admin.email}</p>
                 </div>
               </div>
-              {user?.id !== admin.clerkId && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleRemoveAdmin(admin.clerkId)}
-                  className="text-red-500 hover:text-red-600 hover:bg-red-500/10 h-8 w-8"
-                >
-                  <Trash2 size={16} />
-                </Button>
-              )}
             </div>
           ))}
         </div>
