@@ -3,6 +3,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Flag } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 interface ReportDialogProps {
     podcastId: string;
@@ -19,6 +21,8 @@ const reportOptions = [
 
 const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [additionalDetails, setAdditionalDetails] = useState("");
+    const [contactEmail, setContactEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [open, setOpen] = useState(false);
     const { toast } = useToast();
@@ -40,7 +44,11 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
         setTimeout(() => {
             setIsSubmitting(false);
             setOpen(false);
+
+            // Reset form
             setSelectedOption(null);
+            setAdditionalDetails("");
+            setContactEmail("");
 
             toast({
                 title: "Report submitted",
@@ -69,26 +77,58 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="mt-4">
-                    <p className="text-white-2 mb-4">
-                        Why are you reporting "{podcastTitle}"?
-                    </p>
+                <div className="mt-4 space-y-5">
+                    <div>
+                        <Label className="text-white-2 mb-2 block">
+                            Why are you reporting "{podcastTitle}"?
+                        </Label>
 
-                    <div className="space-y-2">
-                        {reportOptions.map((option) => (
-                            <div
-                                key={option.id}
-                                className={`p-3 rounded-lg cursor-pointer transition-all ${selectedOption === option.id
+                        <div className="space-y-2">
+                            {reportOptions.map((option) => (
+                                <div
+                                    key={option.id}
+                                    className={`p-3 rounded-lg cursor-pointer transition-all ${selectedOption === option.id
                                         ? "bg-orange-1/20 border border-orange-1"
                                         : "bg-black-1/50 border border-gray-800 hover:bg-black-1/70"
-                                    }`}
-                                onClick={() => setSelectedOption(option.id)}
-                            >
-                                <p className={`${selectedOption === option.id ? "text-orange-1" : "text-white-2"}`}>
-                                    {option.label}
-                                </p>
-                            </div>
-                        ))}
+                                        }`}
+                                    onClick={() => setSelectedOption(option.id)}
+                                >
+                                    <p className={`${selectedOption === option.id ? "text-orange-1" : "text-white-2"}`}>
+                                        {option.label}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <Label htmlFor="details" className="text-white-2 mb-2 block">
+                            Additional details (optional)
+                        </Label>
+                        <Textarea
+                            id="details"
+                            placeholder="Please provide specific details about the issue..."
+                            value={additionalDetails}
+                            onChange={(e) => setAdditionalDetails(e.target.value)}
+                            className="bg-black-1/50 border border-gray-800 text-white-2 placeholder:text-white-3/50 resize-none min-h-[100px]"
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="email" className="text-white-2 mb-2 block">
+                            Contact email (optional)
+                        </Label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Your email for follow-up..."
+                            value={contactEmail}
+                            onChange={(e) => setContactEmail(e.target.value)}
+                            className="w-full bg-black-1/50 border border-gray-800 text-white-2 placeholder:text-white-3/50 p-2 rounded-md"
+                        />
+                        <p className="text-xs text-white-3 mt-1">
+                            We'll only use this to follow up on your report if necessary.
+                        </p>
                     </div>
 
                     <div className="flex justify-end gap-3 mt-6">
@@ -97,6 +137,8 @@ const ReportDialog = ({ podcastId, podcastTitle }: ReportDialogProps) => {
                             onClick={() => {
                                 setOpen(false);
                                 setSelectedOption(null);
+                                setAdditionalDetails("");
+                                setContactEmail("");
                             }}
                             className="bg-transparent border-gray-700 text-white-2 hover:bg-black-1/50"
                         >

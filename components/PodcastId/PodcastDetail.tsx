@@ -40,7 +40,7 @@ const PodcastDetail = ({
 
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
   const likePodcast = useMutation(api.podcasts.likePodcast);
-  
+
   // Get updated podcast details including likes
   const podcast = useQuery(
     api.podcasts.getPodcastById,
@@ -79,11 +79,11 @@ const PodcastDetail = ({
       const newLikedState = !isLiked;
       setIsLiked(newLikedState);
       setLikeCount(prevCount => newLikedState ? prevCount + 1 : prevCount - 1);
-      
+
       // Make API call
-      await likePodcast({ 
-        podcastId, 
-        userId: user.id 
+      await likePodcast({
+        podcastId,
+        userId: user.id
       });
     } catch (error) {
       // Revert optimistic updates on error
@@ -183,8 +183,8 @@ const PodcastDetail = ({
                 variant="ghost"
                 size="icon"
                 className={`size-10 sm:size-12 rounded-full transition-all duration-200 hover:scale-105 flex items-center justify-center ${isPlaying
-                    ? "bg-black text-orange-1 hover:bg-black/90"
-                    : "bg-orange-1 text-white-1 hover:bg-orange-1/90"
+                  ? "bg-black text-orange-1 hover:bg-black/90"
+                  : "bg-orange-1 text-white-1 hover:bg-orange-1/90"
                   }`}
                 onClick={handlePlay}
               >
@@ -212,8 +212,8 @@ const PodcastDetail = ({
               <Button
                 onClick={handleLike}
                 className={`flex items-center gap-1 sm:gap-2 px-3 min-w-[70px] ${isLiked
-                    ? "bg-red-500 hover:bg-red-600"
-                    : "bg-black-1/50 hover:bg-black-1/70"
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-black-1/50 hover:bg-black-1/70"
                   } text-white-1 transition-colors`}
               >
                 <Heart
