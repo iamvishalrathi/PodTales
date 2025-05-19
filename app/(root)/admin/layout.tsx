@@ -55,10 +55,28 @@ export default function AdminLayout({
     }
 
     return (
-        <div className="min-h-[calc(100vh-80px)]">
+        <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-black-2/50 to-black-1">
             <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                <div className="flex items-center justify-between mb-8">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white-1">Admin Portal</h1>
+                    {user && (
+                        <div className="flex items-center gap-3">
+                            <img
+                                src={user.imageUrl}
+                                alt={user.fullName || "Admin"}
+                                className="w-10 h-10 rounded-full border-2 border-orange-1"
+                            />
+                            <div>
+                                <p className="text-white-1 font-medium">{user.fullName}</p>
+                                <p className="text-white-3 text-sm">Administrator</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
                 <Navigation pendingReports={pendingReports || 0} />
-                {children}
+                <div className="bg-black-1/20 rounded-xl border border-gray-800 p-6">
+                    {children}
+                </div>
             </div>
         </div>
     );

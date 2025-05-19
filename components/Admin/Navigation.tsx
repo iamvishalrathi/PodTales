@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Flag, LayoutDashboard, UserCog } from 'lucide-react';
 
 interface NavigationProps {
@@ -7,7 +7,7 @@ interface NavigationProps {
 }
 
 const Navigation = ({ pendingReports }: NavigationProps) => {
-    const router = useRouter();
+    const pathname = usePathname();
 
     return (
         <nav className="mb-8">
@@ -16,7 +16,7 @@ const Navigation = ({ pendingReports }: NavigationProps) => {
                     <Link
                         href="/admin"
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                            router.pathname === '/admin' 
+                            pathname === '/admin' 
                             ? 'bg-orange-1/20 text-orange-1' 
                             : 'hover:bg-black-1/30'
                         }`}
@@ -29,7 +29,7 @@ const Navigation = ({ pendingReports }: NavigationProps) => {
                     <Link
                         href="/admin/management"
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                            router.pathname === '/admin/management' 
+                            pathname === '/admin/management' 
                             ? 'bg-orange-1/20 text-orange-1' 
                             : 'hover:bg-black-1/30'
                         }`}
@@ -42,7 +42,7 @@ const Navigation = ({ pendingReports }: NavigationProps) => {
                     <Link
                         href="/admin/reports"
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                            router.pathname === '/admin/reports' 
+                            pathname === '/admin/reports' 
                             ? 'bg-orange-1/20 text-orange-1' 
                             : 'hover:bg-black-1/30'
                         }`}
