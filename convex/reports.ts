@@ -65,3 +65,37 @@ export const updateReportStatus = mutation({
         return args.reportId;
     },
 });
+
+// Get total number of reports
+export const getTotalReports = query({
+    args: {},
+    handler: async (ctx) => {
+        const reports = await ctx.db.query("reports").collect();
+        return reports.length;
+    },
+});
+
+// Get count of pending reports
+export const getPendingReportsCount = query({
+    args: {},
+    handler: async (ctx) => {
+        const pendingReports = await ctx.db
+            .query("reports")
+            .filter((q) => q.eq(q.field("status"), "pending"))
+            .collect();
+        return pendingReports.length;
+    },
+});
+
+// Get recent reports (limit by count, sorted by creation time descending)
+export const getRecentReports = query({
+    args: {
+        limit: v.number(),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db
+            .query("reports")
+            .order("desc")
+            .take(args.limit);
+    },
+});

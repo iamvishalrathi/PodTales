@@ -282,3 +282,16 @@ export const getAdminUsers = query({
     }));
   },
 });
+
+// Get total count of admin users
+export const getAdminCount = query({
+  args: {},
+  handler: async (ctx) => {
+    const adminUsers = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("isAdmin"), true))
+      .collect();
+
+    return adminUsers.length;
+  },
+});
