@@ -295,3 +295,22 @@ export const getAdminCount = query({
     return adminUsers.length;
   },
 });
+
+// Add this mutation to handle admin access requests
+export const requestAdminAccess = mutation({
+  args: {
+    userId: v.string(),
+    reason: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Create the admin request record
+    const requestId = await ctx.db.insert("adminRequests", {
+      userId: args.userId,
+      reason: args.reason,
+      status: "pending",
+      createdAt: new Date().toISOString(),
+    });
+
+    return requestId;
+  },
+});
