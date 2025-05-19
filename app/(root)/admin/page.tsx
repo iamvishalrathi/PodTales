@@ -7,6 +7,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import LoaderSpinner from "@/components/LoaderSpinner";
 import Link from "next/link";
+import Statistics from "@/components/Admin/Statistics";
 
 const AdminPage = () => {
     const { user, isLoaded } = useUser();
@@ -18,9 +19,6 @@ const AdminPage = () => {
         api.users.isUserAdmin,
         user?.id ? { userId: user.id } : "skip"
     );
-
-    // Move this hook up here!
-    const recentReports = useQuery(api.reports.getRecentReports, { limit: 5 });
 
     useEffect(() => {
         if (isLoaded && isAdmin !== undefined) {
@@ -54,7 +52,7 @@ const AdminPage = () => {
         <div className="min-h-[calc(100vh-80px)]">
             <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
                 <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white-1">Admin Dashboard</h1>
-
+                <Statistics />
                 {/* Quick Actions Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <Link href="/admin/management" className="bg-black-1/30 border border-gray-800 rounded-xl p-6 hover:bg-black-1/40 transition-colors">
@@ -66,41 +64,6 @@ const AdminPage = () => {
                         <h2 className="text-xl font-bold text-white-1 mb-2">Report Management</h2>
                         <p className="text-white-3">Handle user reports and content moderation</p>
                     </Link>
-                </div>
-
-                {/* Recent Activity Section */}
-                <div className="bg-black-1/30 border border-gray-800 rounded-xl p-6">
-                    <h2 className="text-xl font-bold text-white-1 mb-4">Recent Reports</h2>
-                    {recentReports && recentReports.length > 0 ? (
-                        <div className="space-y-4">
-                            {recentReports.map((report) => (
-                                <div key={report._id} className="flex items-center justify-between p-3 bg-black-1/50 rounded-lg border border-gray-800">
-                                    <div>
-                                        <p className="text-white-1 font-medium">{report.podcastTitle}</p>
-                                        <p className="text-white-3 text-sm">{report.reportType}</p>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <span className={`px-2 py-1 rounded text-xs font-medium ${
-                                            report.status === "pending" ? "bg-yellow-500/20 text-yellow-500" :
-                                            report.status === "reviewed" ? "bg-blue-500/20 text-blue-500" :
-                                            report.status === "resolved" ? "bg-green-500/20 text-green-500" :
-                                            "bg-red-500/20 text-red-500"
-                                        }`}>
-                                            {report.status}
-                                        </span>
-                                        <Link 
-                                            href="/admin/reports" 
-                                            className="text-orange-1 hover:text-orange-2 text-sm"
-                                        >
-                                            View
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-white-3 text-center py-4">No recent reports</p>
-                    )}
                 </div>
             </div>
         </div>

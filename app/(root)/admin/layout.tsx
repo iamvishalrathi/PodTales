@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import Link from "next/link";
+import Statistics from "@/components/Admin/Statistics";
+import Navigation from "@/components/Admin/Navigation";
 
 export default function AdminLayout({
     children,
@@ -23,10 +24,7 @@ export default function AdminLayout({
         user?.id ? { userId: user.id } : "skip"
     );
 
-    // Add new queries for statistics
-    const totalReports = useQuery(api.reports.getTotalReports);
     const pendingReports = useQuery(api.reports.getPendingReportsCount);
-    const adminCount = useQuery(api.users.getAdminCount);
 
     useEffect(() => {
         if (isLoaded && isAdmin !== undefined) {
@@ -59,58 +57,7 @@ export default function AdminLayout({
     return (
         <div className="min-h-[calc(100vh-80px)]">
             <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-                {/* Add statistics bar */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                    <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4">
-                        <h3 className="text-white-3 text-sm">Total Reports</h3>
-                        <p className="text-2xl font-bold text-white-1">{totalReports || 0}</p>
-                    </div>
-                    <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4">
-                        <h3 className="text-white-3 text-sm">Pending Reports</h3>
-                        <p className="text-2xl font-bold text-white-1">{pendingReports || 0}</p>
-                    </div>
-                    <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4">
-                        <h3 className="text-white-3 text-sm">Total Admins</h3>
-                        <p className="text-2xl font-bold text-white-1">{adminCount || 0}</p>
-                    </div>
-                </div>
-
-                <nav className="mb-8">
-                    <ul className="flex flex-wrap gap-4 text-white-2">
-                        <li>
-                            <Link
-                                href="/admin"
-                                className={`hover:text-orange-1 transition-colors ${router.pathname === '/admin' ? 'text-orange-1' : ''
-                                    }`}
-                            >
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/admin/management"
-                                className={`hover:text-orange-1 transition-colors ${router.pathname === '/admin/management' ? 'text-orange-1' : ''
-                                    }`}
-                            >
-                                Admin Management
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/admin/reports"
-                                className={`hover:text-orange-1 transition-colors ${router.pathname === '/admin/reports' ? 'text-orange-1' : ''
-                                    }`}
-                            >
-                                Reports
-                                {pendingReports > 0 && (
-                                    <span className="ml-2 px-2 py-0.5 text-xs bg-orange-1 text-black rounded-full">
-                                        {pendingReports}
-                                    </span>
-                                )}
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
+                <Navigation pendingReports={pendingReports || 0} />
                 {children}
             </div>
         </div>
