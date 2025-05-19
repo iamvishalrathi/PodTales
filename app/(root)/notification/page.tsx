@@ -94,7 +94,7 @@ const NotificationPage = () => {
   const readCount = notifications.filter(n => n.isRead).length;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-7 max-w-4xl max-md:min-h-[calc(100vh-135px)] min-h-[calc(100vh-85px)]">
       <NotificationHeader
         hasNotifications={notifications.length > 0}
         unreadCount={unreadCount}
