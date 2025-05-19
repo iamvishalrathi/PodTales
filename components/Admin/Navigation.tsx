@@ -2,11 +2,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Flag, LayoutDashboard, UserCog } from 'lucide-react';
 
-interface NavigationProps {
-    pendingReports: number;
-}
-
-const Navigation = ({ pendingReports }: NavigationProps) => {
+const Navigation = () => {
     const pathname = usePathname();
 
     return (
@@ -49,11 +45,6 @@ const Navigation = ({ pendingReports }: NavigationProps) => {
                     >
                         <Flag size={18} />
                         <span>Reports</span>
-                        {pendingReports > 0 && (
-                            <span className="px-2 py-0.5 text-xs bg-orange-1 text-black rounded-full">
-                                {pendingReports}
-                            </span>
-                        )}
                     </Link>
                 </li>
             </ul>

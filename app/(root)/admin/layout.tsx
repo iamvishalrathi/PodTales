@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import LoaderSpinner from "@/components/LoaderSpinner";
-import Statistics from "@/components/Admin/Statistics";
 import Navigation from "@/components/Admin/Navigation";
 
 export default function AdminLayout({
@@ -23,8 +22,6 @@ export default function AdminLayout({
         api.users.isUserAdmin,
         user?.id ? { userId: user.id } : "skip"
     );
-
-    const pendingReports = useQuery(api.reports.getPendingReportsCount);
 
     useEffect(() => {
         if (isLoaded && isAdmin !== undefined) {
@@ -55,7 +52,7 @@ export default function AdminLayout({
     }
 
     return (
-        <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-black-2/50 to-black-1">
+        <div className="min-h-[calc(100vh-80px)]">
             <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-white-1">Admin Portal</h1>
@@ -73,7 +70,7 @@ export default function AdminLayout({
                         </div>
                     )}
                 </div>
-                <Navigation pendingReports={pendingReports || 0} />
+                <Navigation />
                 <div className="bg-black-1/20 rounded-xl border border-gray-800 p-6">
                     {children}
                 </div>
