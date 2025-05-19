@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Shield, ArrowRight } from "lucide-react";
 
@@ -12,7 +12,33 @@ const RequestAdminAccess = ({ userId }: RequestAdminAccessProps) => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [reason, setReason] = useState("");
 
+    // Add query to check for existing request
+    const existingRequest = useQuery(api.users.getAdminRequest, { userId });
     const requestAdminAccess = useMutation(api.users.requestAdminAccess);
+
+    // Show loading state while checking for existing request
+    if (existingRequest === undefined) {
+        return (
+            <div className="flex items-center justify-center min-h-[70vh]">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-orange-1" />
+            </div>
+        );
+    }
+
+    // If there's an existing pending request, show status
+    if (existingRequest) {
+        return (
+            <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-6 text-center">
+                <div className="flex justify-center mb-4">
+                    <Shield className="w-12 h-12 text-orange-500" />
+                </div>
+                <h2 className="text-xl font-bold text-white-1 mb-2">Request Pending</h2>
+                <p className="text-white-3">
+                    Your admin access request is currently under review. We&apos;ll notify you once a decision has been made.
+                </p>
+            </div>
+        );
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

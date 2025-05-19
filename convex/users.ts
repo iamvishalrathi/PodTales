@@ -314,3 +314,34 @@ export const requestAdminAccess = mutation({
     return requestId;
   },
 });
+
+// Get admin request for a user
+export const getAdminRequest = query({
+  args: { userId: v.string() },
+  handler: async (ctx, args) => {
+    const request = await ctx.db
+      .query("adminRequests")
+      .filter((q) => q.eq(q.field("userId"), args.userId))
+      .filter((q) => q.eq(q.field("status"), "pending"))
+      .first();
+
+    return request;
+  },
+});
+
+// Get all admin requests
+export const getAdminRequests = query({
+  args: {
+    status: v.optional(v.string())
+  },
+  handler: async (ctx, args) => {
+    let query = ctx.db.query("adminRequests");
+    
+    if (args.status) {
+      query = query.filter((q) => q.eq(q.field("status"), args.status));
+    }
+
+    const requests = await query.collect();
+    return requests;
+  },
+});

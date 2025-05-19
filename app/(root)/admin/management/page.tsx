@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Trash2 } from "lucide-react";
+import { Trash2, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useDebounce } from "@/lib/useDebounce";
 
@@ -18,8 +18,6 @@ const AdminManagement = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearch = useDebounce(searchTerm, 300);
 
-    // Mutation to set a user as admin
-    const setUserAdmin = useMutation(api.users.setUserAdmin);
 
     // Query to search users
     const users = useQuery(api.users.searchUsers, {
@@ -28,6 +26,44 @@ const AdminManagement = () => {
 
     // Query to get admin users
     const adminUsers = useQuery(api.users.getAdminUsers);
+
+    // Query to get admin requests
+    const adminRequests = useQuery(api.users.getAdminRequests, {
+        status: "pending"
+    });
+
+    // Mutation to update admin request status
+    const setUserAdmin = useMutation(api.users.setUserAdmin);
+
+    const handleRequestAction = async (requestId: string, userId: string, approved: boolean) => {
+        if (!user?.id) return;
+
+        try {
+            if (approved) {
+                await setUserAdmin({
+                    userId: userId,
+                    isAdmin: true,
+                    requestingUserId: user.id
+                });
+            }
+
+            toast({
+                title: approved ? "Request Approved" : "Request Rejected",
+                description: approved 
+                    ? "User has been granted admin privileges" 
+                    : "Admin request has been rejected",
+                duration: 3000,
+            });
+        } catch (error) {
+            console.error("Error handling admin request:", error);
+            toast({
+                title: "Error processing request",
+                description: error instanceof Error ? error.message : "Please try again",
+                variant: "destructive",
+                duration: 3000,
+            });
+        }
+    };
 
     const handleRemoveAdmin = async (adminId: string) => {
         if (!user?.id) return;
@@ -85,7 +121,7 @@ const AdminManagement = () => {
         }
     };
 
-    const handleUserSelect = (selectedUser: any) => {
+    const handleUserSelect = (selectedUser: { clerkId: string; name: string }) => {
         setUserId(selectedUser.clerkId);
         setSearchTerm(selectedUser.name + ' (' + selectedUser.clerkId + ')');
     };
@@ -93,6 +129,51 @@ const AdminManagement = () => {
     return (
         <div>
             <h2 className="text-xl font-bold mb-6 text-white-1">Admin Management</h2>
+
+            {/* Admin Requests Section */}
+            {adminRequests && adminRequests.length > 0 && (
+                <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4 mb-6">
+                    <h3 className="text-lg font-semibold text-white-1 mb-4">Pending Admin Requests</h3>
+                    <div className="space-y-4">
+                        {adminRequests.map((request) => (
+                            <div
+                                key={request._id}
+                                className="bg-black-1/50 p-4 rounded-lg border border-gray-800"
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="flex-1">
+                                        <p className="text-white-1 font-medium">{request.userId}</p>
+                                        <p className="text-white-3 text-sm mt-1 line-clamp-2">{request.reason}</p>
+                                        <p className="text-white-3 text-xs mt-2">
+                                            Requested on: {new Date(request.createdAt).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                    <div className="flex gap-2 ml-4">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => handleRequestAction(request._id, request.userId, true)}
+                                            className="bg-green-500/20 text-green-500 hover:bg-green-500/30"
+                                        >
+                                            <Check size={18} className="mr-1" />
+                                            Approve
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => handleRequestAction(request._id, request.userId, false)}
+                                            className="bg-red-500/20 text-red-500 hover:bg-red-500/30"
+                                        >
+                                            <X size={18} className="mr-1" />
+                                            Reject
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* Current Admins Section */}
             <div className="bg-black-1/30 border border-gray-800 rounded-lg p-4 mb-6">
