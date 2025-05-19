@@ -64,7 +64,7 @@ export default defineSchema({
   })
     .index("by_podcast", ["podcastId"])
     .index("by_user", ["userId"]),
-    
+
   follows: defineTable({
     follower: v.string(), // The clerkId of the user who is following
     following: v.string(), // The clerkId of the user being followed
@@ -73,7 +73,7 @@ export default defineSchema({
     .index("by_follower", ["follower"])
     .index("by_following", ["following"])
     .index("by_follower_and_following", ["follower", "following"]),
-  
+
   notifications: defineTable({
     userId: v.string(),
     creatorId: v.string(),
@@ -85,7 +85,7 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_creator", ["creatorId"])
     .index("by_podcast", ["podcastId"]),
-    
+
   reports: defineTable({
     podcastId: v.id("podcasts"),
     podcastTitle: v.string(),
@@ -99,4 +99,14 @@ export default defineSchema({
   })
     .index("by_status", ["status"])
     .index("by_podcast", ["podcastId"]),
+    
+  adminRequests: defineTable({
+    userId: v.string(),
+    reason: v.string(),
+    status: v.string(), // "pending", "approved", "rejected"
+    createdAt: v.string(),
+    reviewedAt: v.optional(v.string()),
+    reviewedBy: v.optional(v.string()),
+    reviewNotes: v.optional(v.string()),
+  })
 });
