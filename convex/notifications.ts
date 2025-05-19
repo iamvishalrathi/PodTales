@@ -50,6 +50,7 @@ export const createNotification = mutation({
         creatorId: v.string(),
         type: v.string(),
         podcastId: v.optional(v.string()),
+        message: v.optional(v.string()), // Add message parameter
     },
     handler: async (ctx, args) => {
         // Don't create notification if user is the creator
@@ -62,6 +63,7 @@ export const createNotification = mutation({
             creatorId: args.creatorId,
             type: args.type,
             podcastId: args.podcastId,
+            message: args.message, // Include message in the notification
             isRead: false,
         });
     },
@@ -75,7 +77,7 @@ export const markNotificationAsReadUnread = mutation({
         if (!notification) {
             throw new Error("Notification not found");
         }
-        
+
         // Toggle the isRead status
         return await ctx.db.patch(args.notificationId, {
             isRead: !notification.isRead,
@@ -85,7 +87,7 @@ export const markNotificationAsReadUnread = mutation({
 
 // Mark all notifications as read or unread for a user
 export const markAllNotificationsAsReadUnread = mutation({
-    args: { 
+    args: {
         userId: v.string(),
         markAs: v.string() // "read" or "unread"
     },
@@ -120,7 +122,7 @@ export const deleteNotification = mutation({
         if (!notification) {
             throw new Error("Notification not found");
         }
-        
+
         await ctx.db.delete(args.notificationId);
         return true;
     },

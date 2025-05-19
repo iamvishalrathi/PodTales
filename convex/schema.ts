@@ -77,6 +77,7 @@ export default defineSchema({
   notifications: defineTable({
     userId: v.string(),
     creatorId: v.string(),
+    message: v.optional(v.string()),
     type: v.string(),
     podcastId: v.optional(v.id("podcasts")),
     isRead: v.boolean(),
@@ -99,7 +100,7 @@ export default defineSchema({
   })
     .index("by_status", ["status"])
     .index("by_podcast", ["podcastId"]),
-    
+
   adminRequests: defineTable({
     userId: v.string(),
     reason: v.string(),

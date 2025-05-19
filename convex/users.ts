@@ -257,7 +257,7 @@ export const searchUsers = query({
       .collect();
 
     // Filter users on the application side
-    return users.filter((user) => 
+    return users.filter((user) =>
       user.name.toLowerCase().includes(searchTermLower) ||
       user.clerkId.toLowerCase().includes(searchTermLower)
     );
@@ -336,12 +336,29 @@ export const getAdminRequests = query({
   },
   handler: async (ctx, args) => {
     let query = ctx.db.query("adminRequests");
-    
+
     if (args.status) {
       query = query.filter((q) => q.eq(q.field("status"), args.status));
     }
 
     const requests = await query.collect();
     return requests;
+  },
+});
+
+// Add this mutation to delete admin requests
+export const deleteAdminRequest = mutation({
+  args: {
+    requestId: v.id("adminRequests")
+  },
+  handler: async (ctx, args) => {
+    const request = await ctx.db.get(args.requestId);
+
+    if (!request) {
+      throw new Error("Admin request not found");
+    }
+
+    await ctx.db.delete(args.requestId);
+    return true;
   },
 });

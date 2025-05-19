@@ -81,7 +81,7 @@ const RequestAdminAccess = ({ userId }: RequestAdminAccessProps) => {
                 <p className="text-white-3 mb-6">
                     Tell us why you&apos;d like to become an administrator. We&apos;ll review your request and get back to you.
                 </p>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <textarea

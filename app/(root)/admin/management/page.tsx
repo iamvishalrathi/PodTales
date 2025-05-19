@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Trash2, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useDebounce } from "@/lib/useDebounce";
+import { Id } from "@/convex/_generated/dataModel";
 
 const AdminManagement = () => {
     const { user } = useUser();
@@ -18,6 +19,9 @@ const AdminManagement = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearch = useDebounce(searchTerm, 300);
 
+
+    const createNotification = useMutation(api.notifications.createNotification);
+    const deleteAdminRequest = useMutation(api.users.deleteAdminRequest);
 
     // Query to search users
     const users = useQuery(api.users.searchUsers, {
@@ -34,8 +38,7 @@ const AdminManagement = () => {
 
     // Mutation to update admin request status
     const setUserAdmin = useMutation(api.users.setUserAdmin);
-
-    const handleRequestAction = async (requestId: string, userId: string, approved: boolean) => {
+    const handleRequestAction = async (requestId: Id<"adminRequests">, userId: string, approved: boolean) => {
         if (!user?.id) return;
 
         try {
@@ -46,6 +49,21 @@ const AdminManagement = () => {
                     requestingUserId: user.id
                 });
             }
+
+            // Create notification for the user with request ID
+            await createNotification({
+                userId: userId,
+                type: approved ? "admin_approved" : "admin_rejected",
+                message: `Request #${requestId}: ${approved 
+                    ? "Your request for admin access has been approved!"
+                    : "Your request for admin access has been rejected."}`,
+                creatorId: user.id
+            });
+
+            // Delete the admin request
+            await deleteAdminRequest({
+                requestId
+            });
 
             toast({
                 title: approved ? "Request Approved" : "Request Rejected",

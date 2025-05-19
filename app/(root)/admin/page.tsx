@@ -21,8 +21,8 @@ const AdminPage = () => {
 
                     {/* Quick Actions Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <Link 
-                            href="/admin/management" 
+                        <Link
+                            href="/admin/management"
                             className="group bg-black-1/30 border border-gray-800 rounded-xl p-6 hover:bg-black-1/40 transition-all hover:border-orange-1/50"
                         >
                             <div className="flex items-center gap-4 mb-4">
@@ -38,8 +38,8 @@ const AdminPage = () => {
                             </div>
                         </Link>
 
-                        <Link 
-                            href="/admin/reports" 
+                        <Link
+                            href="/admin/reports"
                             className="group bg-black-1/30 border border-gray-800 rounded-xl p-6 hover:bg-black-1/40 transition-all hover:border-orange-1/50"
                         >
                             <div className="flex items-center gap-4 mb-4">
