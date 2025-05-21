@@ -21,7 +21,6 @@ const AdminManagement = () => {
 
 
     const createNotification = useMutation(api.notifications.createNotification);
-    const deleteAdminRequest = useMutation(api.users.deleteAdminRequest);
 
     // Query to search users
     const users = useQuery(api.users.searchUsers, {
@@ -54,15 +53,10 @@ const AdminManagement = () => {
             await createNotification({
                 userId: userId,
                 type: approved ? "admin_approved" : "admin_rejected",
-                message: `Request #${requestId}: ${approved 
+                message: approved 
                     ? "Your request for admin access has been approved!"
-                    : "Your request for admin access has been rejected."}`,
+                    : "Your request for admin access has been rejected.",
                 creatorId: user.id
-            });
-
-            // Delete the admin request
-            await deleteAdminRequest({
-                requestId
             });
 
             toast({

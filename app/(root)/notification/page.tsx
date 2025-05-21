@@ -48,8 +48,6 @@ const NotificationPage = () => {
     // Navigate based on notification type
     if (notification.type === "new_podcast" && notification.podcastId) {
       router.push(`/podcasts/${notification.podcastId}`);
-    } else if (notification.type === "follow") {
-      router.push(`/profile/${notification.creatorId}`);
     }
   };
 

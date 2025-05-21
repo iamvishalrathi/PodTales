@@ -24,8 +24,9 @@ const NotificationContent = ({ notification }: NotificationContentProps) => (
       </span>
     </div>
 
+    {/* Display notification message based on type */}
     <p className="text-white-2 mb-2">
-      {notification.podcastTitle}
+      {notification?.message}
     </p>
 
     {notification.type === "new_podcast" && notification.podcastImageUrl && (
