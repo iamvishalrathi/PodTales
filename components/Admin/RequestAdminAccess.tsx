@@ -90,6 +90,12 @@ const RequestAdminAccess = ({ userId }: RequestAdminAccessProps) => {
                             placeholder="Why would you like to become an admin?"
                             className="w-full bg-black-2/50 border border-gray-800 rounded-lg p-3 text-white-1 placeholder:text-white-3 focus:outline-none focus:border-orange-1 transition-colors min-h-[120px]"
                             disabled={isSubmitting}
+                            onKeyDown={(e) => {
+                                // Prevent default behavior for space key to ensure it's captured
+                                if (e.key === ' ') {
+                                    e.stopPropagation();
+                                }
+                            }}
                         />
                     </div>
                     <button
