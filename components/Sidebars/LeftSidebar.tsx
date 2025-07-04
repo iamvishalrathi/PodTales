@@ -28,7 +28,7 @@ const LeftSidebar = () => {
     const hasUnreadNotifications = notifications?.some(notification => !notification.isRead) || false;
 
     return (
-        <section className={cn("left_sidebar h-[calc(100vh-5px)] transition-all duration-300", {
+        <section className={cn("left_sidebar h-[calc(100vh-1px)] transition-all duration-300", {
             'h-[calc(100vh-80px)]': audio?.audioUrl
         })}>
             <nav className='flex flex-col gap-6 w-full'>

@@ -33,7 +33,7 @@ const RightSidebar = () => {
     const { audio } = useAudio();
 
     return (
-        <section className={cn('right_sidebar gap-8 h-[calc(100vh-5px)]', {
+        <section className={cn('right_sidebar gap-8 h-[calc(100vh-1px)]', {
             'h-[calc(100vh-80px)]': audio?.audioUrl
         })}>
             {/* Profile Section */}
@@ -104,7 +104,7 @@ const RightSidebar = () => {
             </section>
 
             {/* Top Podcasters Section */}
-            <section className="flex flex-col gap-2">
+            <section className="flex flex-col gap-2 mt-4">
                 <Header headerTitle="Top Podcasters" />
                 {isLoading ? (
                     <div className="flex flex-col">
@@ -127,7 +127,7 @@ const RightSidebar = () => {
                     <p className="text-sm text-white-3 italic py-2">No top podcasters available</p>
                 ) : (
                     <div className="flex flex-col">
-                        {slides.slice(0, 4).map((podcaster: TopPodcastersProps) => (
+                        {slides.slice(0, 3).map((podcaster: TopPodcastersProps) => (
                             <div
                                 key={podcaster._id}
                                 className="flex cursor-pointer justify-between hover:bg-black-2/50 hover:scale-[1.02] p-2 rounded-lg transition-all duration-300 ease-in-out"
