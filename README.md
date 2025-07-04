@@ -27,12 +27,12 @@
 
 ##### 🔗 Table of Contents
 
-- [📍 Overview](#-overview)
-- [👾 Features](#-features)
-- [⚙️ Tech Stack](#tech-stack)
-- [🔍 Website Preview](#-website-preview)
-- [📂 Repository Structure](#-repository-structure)
-- [🚀 Getting Started](#-getting-started)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#tech-stack)
+- [Website Preview](#-website-preview)
+- [Repository Structure](#-repository-structure)
+- [Getting Started](#-getting-started)
     - [🔖 Prerequisites](#-prerequisites)
     - [📦 Installation](#-installation)
     - [🤖 Usage](#-usage)
