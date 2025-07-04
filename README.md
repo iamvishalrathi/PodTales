@@ -34,7 +34,7 @@
 
 - [📍 Overview](#-overview)
 - [👾 Features](#-features)
-- [⚙️ Tech Stack](#-tech-stack)
+- [⚙ Tech Stack](#-tech-stack)
 - [🔍 Website Preview](#-website-preview)
 - [📂 Repository Structure](#-repository-structure)
 - [🚀 Getting Started](#-getting-started)
@@ -73,7 +73,7 @@ PodTales is a cutting-edge AI SaaS platform that empowers users to create, disco
 
 ---
 
-## ⚙️ Tech Stack
+## ⚙ Tech Stack
 
 ### 🖥️ Frontend
 - **Next.js** – React framework for server-side rendering and routing
