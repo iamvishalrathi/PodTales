@@ -154,6 +154,7 @@ A cutting-edge AI SaaS platform that enables users to create, discover, and enjo
     └── types
         └── index.ts
 ```
+---
 
 ## 🚀 Getting Started
 
