@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
     <img src="https://img.shields.io/badge/-Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
     <img src="https://img.shields.io/badge/-ShadCN_UI-18181B?style=for-the-badge&logo=shadcnui&logoColor=white" alt="ShadCN UI" />
-    <img src="https://img.shields.io/badge/-Convex-18181B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHoiLz48L3N2Zz4=&label=Convex" alt="Convex" />
+    <img src="https://img.shields.io/badge/-Convex-18181B?style=for-the-badge" alt="Convex" />
     <img src="https://img.shields.io/badge/-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini" />
     <img src="https://img.shields.io/badge/-ElevenLabs-FF6F00?style=for-the-badge&logo=elevenlabs&logoColor=white" alt="ElevenLabs" />
     <img src="https://img.shields.io/badge/-Freepik-0F9AFE?style=for-the-badge&logo=freepik&logoColor=white" alt="Freepik" />
