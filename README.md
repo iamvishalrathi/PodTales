@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/iamvishalrathi/PodTales/blob/main/public/icons/logo.png" width="50" alt="logo">
+  <img src="https://github.com/iamvishalrathi/PodTales/blob/main/public/icons/logo.png" width="30%" alt="logo">
 </p>
 <p align="center">
     <h1 align="center">PODTALES</h1>
