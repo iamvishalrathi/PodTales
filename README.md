@@ -28,15 +28,13 @@
 ## 🔗 Table of Contents
 
 - [📍 Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#tech-stack)
-- [Website Preview](#-website-preview)
-- [Repository Structure](#-repository-structure)
-- [Getting Started](#-getting-started)
-    - [🔖 Prerequisites](#-prerequisites)
+- [👾 Features](#-features)
+- [⚙️ Tech Stack](#-tech-stack)
+- [🔍 Website Preview](#-website-preview)
+- [📂 Repository Structure](#-repository-structure)
+- [🚀 Getting Started](#-getting-started)
     - [📦 Installation](#-installation)
     - [🤖 Usage](#-usage)
-    - [🧪 Tests](#-tests)
 - [📞 Contact](#-contact)
 
 ---
@@ -70,7 +68,7 @@ A cutting-edge AI SaaS platform that enables users to create, discover, and enjo
 
 ---
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+## ⚙️ Tech Stack
 
 - Next.js
 - TypeScript
@@ -84,12 +82,6 @@ A cutting-edge AI SaaS platform that enables users to create, discover, and enjo
 ---
 
 ## 🔍 Website Preview
-
-You can explore PodTales live by visiting the website:
-
-[**PodTales - Preview the App**](https://podtales.vercel.app/)
-
-### 📸 Screenshot
 ![image](https://github.com/iamvishalrathi/PodTales/blob/main/public/sns.png)
 
 ---
@@ -165,10 +157,6 @@ You can explore PodTales live by visiting the website:
 
 ## 🚀 Getting Started
 
-### 🔖 Prerequisites
-
-**TypeScript**: `version x.y.z`
-
 ### 📦 Installation
 
 Build the project from source:
@@ -193,15 +181,7 @@ Build the project from source:
 To run the project, execute the following command:
 
 ```sh
-❯ npm run build && node dist/main.js
-```
-
-### 🧪 Tests
-
-Execute the test suite using the following command:
-
-```sh
-❯ npm test
+❯ npm run dev
 ```
 
 ---
