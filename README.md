@@ -2,7 +2,7 @@
   <img src="https://github.com/iamvishalrathi/PodTales/blob/main/public/icons/logo.png" width="30%" alt="logo">
 </p>
 <p align="center">
-    <h1 align="center">PODTALES</h1>
+    <h1 align="center">PODTALES: AI SaaS Podcast Application</h1>
 </p>
 <p align="center">
     <em><code><a href="https://podtales.vercel.app/" target="_blank" >❯ Live</a></code></em>
@@ -25,9 +25,9 @@
 
 <br>
 
-##### 🔗 Table of Contents
+## 🔗 Table of Contents
 
-- [Overview](#-overview)
+- [📍 Overview](#-overview)
 - [Features](#-features)
 - [Tech Stack](#tech-stack)
 - [Website Preview](#-website-preview)
