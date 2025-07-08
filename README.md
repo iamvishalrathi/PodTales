@@ -96,7 +96,9 @@ PodTales is a cutting-edge AI SaaS platform that empowers users to create, disco
 ---
 
 ## 🔍 Website Preview
-![image](https://github.com/iamvishalrathi/PodTales/blob/main/public/sns.png)
+![image](https://github.com/iamvishalrathi/PodTales/blob/main/public/sns1.png)
+![image](https://github.com/iamvishalrathi/PodTales/blob/main/public/sns2.png)
+![image](https://github.com/iamvishalrathi/PodTales/blob/main/public/sns3.png)
 
 ---
 
