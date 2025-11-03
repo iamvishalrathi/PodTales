@@ -29,6 +29,7 @@ export const languageOptions = [
     { value: "kannada", label: "Kannada", native: "ಕನ್ನಡ" },
     { value: "malayalam", label: "Malayalam", native: "മലയാളം" },
     { value: "punjabi", label: "Punjabi", native: "ਪੰਜਾਬੀ" },
+    { value: "haryanvi", label: "Haryanvi", native: "हरयाणवी" },
     { value: "urdu", label: "Urdu", native: "اردو" },
     { value: "persian", label: "Persian", native: "فارسی" },
     { value: "greek", label: "Greek", native: "Ελληνικά" },

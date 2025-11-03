@@ -49,6 +49,7 @@ Language Script Guidelines:
 - Kannada: Use Kannada script (ಕನ್ನಡ)
 - Malayalam: Use Malayalam script (മലയാളം)
 - Punjabi: Use Gurmukhi script (ਪੰਜਾਬੀ)
+- Haryanvi: Use Devanagari script with regional expressions (हरयाणवी)
 - Urdu: Use Nastaliq script (اردو)
 - Persian: Use Persian script (فارسی)
 - Greek: Use Greek alphabet (Ελληνικά)
