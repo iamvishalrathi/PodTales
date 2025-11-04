@@ -33,12 +33,14 @@
 ## 🔗 Table of Contents
 
 - [📍 Overview](#-overview)
+- [🏗️ Architecture](#️-architecture)
 - [👾 Features](#-features)
 - [⚙ Tech Stack](#-tech-stack)
 - [🔍 Website Preview](#-website-preview)
 - [📂 Repository Structure](#-repository-structure)
 - [🚀 Getting Started](#-getting-started)
     - [📦 Installation](#-installation)
+    - [⚙️ Environment Setup](#️-environment-setup)
     - [🤖 Usage](#-usage)
 - [📞 Contact](#-contact)
 
@@ -47,6 +49,63 @@
 ## 📍 Overview
 
 PodTales is a cutting-edge AI SaaS platform that empowers users to create, discover, and enjoy podcasts with ease. Leveraging advanced AI technologies, PodTales offers seamless text-to-audio podcast generation with multi-voice support, automatic thumbnail image creation, and a modern, responsive user interface. Users can explore trending and popular podcasts, search and filter content, and manage their own podcast library. The platform integrates robust authentication, real-time data handling, and a feature-rich podcast player for an immersive listening experience across all devices.
+
+---
+
+## 🏗️ Architecture
+
+PodTales follows a modern full-stack architecture with real-time capabilities and AI integration:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                          Client Layer                          │
+├─────────────────────────────────────────────────────────────────┤
+│  Next.js App Router  │  TypeScript  │  Tailwind CSS  │ ShadCN  │
+│      Responsive UI   │   Type Safety │   Styling      │   UI     │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      Authentication Layer                      │
+├─────────────────────────────────────────────────────────────────┤
+│                        Clerk Auth                               │
+│              User Management & Session Handling                │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       Backend Layer                            │
+├─────────────────────────────────────────────────────────────────┤
+│                      Convex Backend                             │
+│   Real-time Database  │  File Storage  │  Server Functions     │
+│   Query & Mutations   │  Audio/Images  │  Business Logic       │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        AI Services                             │
+├─────────────────────────────────────────────────────────────────┤
+│  Gemini AI (Google)  │  ElevenLabs    │    Freepik API         │
+│  Text Generation     │  Voice Synthesis │  Thumbnail Generation │
+│  Content Creation    │  Multi-voice TTS │  AI Image Creation   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 🔄 Data Flow
+1. **User Interaction** → Next.js frontend handles UI interactions
+2. **Authentication** → Clerk manages secure user sessions
+3. **Real-time Updates** → Convex provides live database synchronization
+4. **AI Processing** → Multiple AI services generate content
+5. **File Management** → Convex handles audio and image storage
+6. **State Management** → React Context manages global app state
+
+### 🗄️ Database Schema
+- **Users**: Profile data, authentication, social links, admin roles
+- **Podcasts**: Audio content, metadata, ratings, analytics
+- **Ratings**: User reviews and rating system
+- **Reports**: Content moderation system
+- **Follows**: Social networking features
+- **Notifications**: Real-time user alerts
 
 ---
 
@@ -67,31 +126,60 @@ PodTales is a cutting-edge AI SaaS platform that empowers users to create, disco
 - **Sticky Player**: Continue listening while browsing the site.
 
 ### 🛡️ User & Platform Features
-- **Robust Authentication**: Secure user login and registration.
-- **Responsive Design**: Optimized for all devices and screen sizes.
+- **Robust Authentication**: Secure user login and registration with Clerk
+- **User Profiles**: Customizable profiles with bio, social links, and verification
+- **Social Features**: Follow/unfollow users, community discovery
+- **Admin Dashboard**: Content moderation and platform analytics
+- **Notification System**: Real-time updates for user interactions
+- **Responsive Design**: Optimized for all devices and screen sizes
 
+### 🤖 AI-Powered Content
+- **Multi-Voice AI**: Choose from various AI voices (Amy, Dan, Liv, Scarlett, Will)
+- **Smart Thumbnails**: AI-generated podcast covers using Freepik API
+- **Content Enhancement**: Gemini AI for intelligent content creation
+- **Language Support**: Multi-language podcast generation capabilities
+
+### 📊 Analytics & Engagement
+- **View Tracking**: Monitor podcast performance and engagement
+- **Rating System**: Five-star rating system with detailed reviews
+- **Popular Content**: Trending and most-listened recommendations
+- **Advanced Search**: Filter by category, language, and popularity
 
 ---
 
 ## ⚙ Tech Stack
 
 ### 🖥️ Frontend
-- **Next.js** – React framework for server-side rendering and routing
-- **TypeScript** – Type-safe JavaScript
-- **Tailwind CSS** – Utility-first CSS framework
-- **ShadCN UI** – Modern UI components
+- **Next.js 14** – React framework with App Router for SSR and routing
+- **TypeScript** – Type-safe JavaScript for better development experience
+- **Tailwind CSS** – Utility-first CSS framework for rapid styling
+- **ShadCN UI** – Modern, accessible React component library
+- **Embla Carousel** – Smooth, customizable carousel components
 
-### 🧠 Backend
-- **Convex** – Real-time backend as a service
-- **Gemini** – AI model for text/image generation
-- **ElevenLabs** – AI voice synthesis for podcasts
-- **Freepik** - AI thubmnail generation for podcasts
+### 🧠 Backend & AI Services
+- **Convex** – Real-time backend as a service with built-in database
+- **Gemini AI** – Google's advanced AI for intelligent content generation
+- **ElevenLabs** – Premium AI voice synthesis with natural-sounding voices
+- **Freepik API** – AI-powered thumbnail and image generation service
+- **Vercel** – Deployment platform with global CDN
 
-### 🔐 Authentication
-- **Clerk** – User authentication and management
+### 🔐 Authentication & Security
+- **Clerk** – Complete authentication solution with session management
+- **JWT Tokens** – Secure token-based authentication
+- **Role-based Access** – Admin and user role management system
+- **Zod Validation** – Runtime type checking and data validation
 
-### 🗄️ Database
-- **Convex Database** – Integrated with Convex backend for real-time data
+### 🗄️ Database & Storage
+- **Convex Database** – Real-time NoSQL database with live queries
+- **File Storage** – Integrated storage for audio files and images
+- **Search Indexing** – Full-text search across podcast content
+- **Real-time Sync** – Automatic data synchronization across clients
+
+### 🎵 Media & Audio
+- **Custom Audio Player** – Advanced controls with progress tracking
+- **Audio Streaming** – Efficient streaming with buffering optimization
+- **Background Playback** – Continuous playback while navigating
+- **Multi-format Support** – Support for various audio formats
 
 ---
 
@@ -193,16 +281,71 @@ Build the project from source:
 ❯ npm install
 ```
 
+### ⚙️ Environment Setup
+
+Create a `.env.local` file in the root directory and add the following environment variables:
+
+```env
+# Convex Backend
+CONVEX_DEPLOYMENT=your_convex_deployment_url
+NEXT_PUBLIC_CONVEX_URL=your_convex_public_url
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+CLERK_WEBHOOK_SECRET=your_clerk_webhook_secret
+
+# AI Services
+GEMINI_API_KEY=your_gemini_api_key
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+FREEPIK_API_KEY=your_freepik_api_key
+
+# Application URLs
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+```
+
 ### 🤖 Usage
 
-To run the project, execute the following command:
-
+1. **Start the development server:**
 ```sh
 ❯ npm run dev
+```
+
+2. **Start Convex backend (in a separate terminal):**
+```sh
+❯ npm run convex
+```
+
+3. **Open your browser:**
+```
+http://localhost:3000
+```
+
+### 📋 Available Scripts
+```sh
+npm run dev          # Start Next.js development server
+npm run convex       # Start Convex backend development
+npm run build        # Build for production
+npm start           # Start production server
+npm run lint        # Run ESLint checks
 ```
 
 ---
 
 ## **📞 Contact**
+
 For any questions, suggestions, or feedback, feel free to reach out:
+
 - **Email:** [rajatrathi029@gmail.com](mailto:rajatrathi029@gmail.com)
+- **GitHub:** [@iamvishalrathi](https://github.com/iamvishalrathi)
+- **Live Demo:** [PodTales](https://podtales.vercel.app/)
+
+---
+
+<div align="center">
+
+**[⬆ Back to Top](#podtales-ai-saas-podcast-application)**
+
+Made with ❤️ by [Vishal Rathi](https://github.com/iamvishalrathi)
+
+</div>
